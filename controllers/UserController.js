@@ -39,8 +39,10 @@ class UserController {
       const validPassword = bcrypt.compare(password, user.password);
       if (!validPassword) { return res.status(401).json({ message: 'Invalid password' }); }
       const token = jwt.sign({ email }, process.env.SECRET, { expiresIn: '2d' });
-      res.json({ message: 'User logged in successfully', token });
-      if (user.rows === []) return res.status(401).json({ error: 'Invalid username or email' });
+      const currentTime = moment().format();
+      const loggedInTime = await pool.query('UPDATE users SET last_loggedin = $1 WHERE email = $2 RETURNING last_loggedin ', [currentTime, email]);
+
+      res.json({ message: 'User logged in successfully', token, lastLoggedIn: loggedInTime.rows[0] });
     } catch (err) {
       res.status(401).json({ error: err.message });
     }
