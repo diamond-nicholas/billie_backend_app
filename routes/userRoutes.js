@@ -5,5 +5,6 @@ const router = express.Router();
 const UserController = require('../controllers/UserController');
 
 router.post('/create-user/', UserController.CreateUser);
+router.post('/signin/', UserController.LoginUser);
 
 module.exports = router;
