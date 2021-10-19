@@ -1,0 +1,48 @@
+{
+  "name": "billie_backend_app",
+  "version": "1.0.0",
+  "description": "Backend for billie app",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "test": "mocha ./tests/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/David-Uk/billie_backend_app.git"
+  },
+  "keywords": [
+    "Postgres",
+    "Express",
+    "Node.js",
+    "Backend"
+  ],
+  "author": "David Ukelere",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/David-Uk/billie_backend_app/issues"
+  },
+  "homepage": "https://github.com/David-Uk/billie_backend_app#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.27.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.1",
+    "multer": "^1.4.3",
+    "nanoid": "^3.1.30",
+    "pg": "^8.7.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "mocha": "^9.1.3",
+    "nodemon": "^2.0.13"
+  }
+}
