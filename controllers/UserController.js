@@ -73,6 +73,17 @@ class UserController {
       return res.status(500).json({ error });
     }
   }
+  
+  static async DeleteUser(req, res) {
+    try {
+      const result = await pool.query('DELETE FROM users WHERE userid=$1 RETURNING *', [
+        req.params.id,
+      ]);
+      return res.status(200).json({ message: 'Deleted', result });
+    } catch (err) {
+      return res.status(400).json(err);
+    }
+  }
 }
 
 module.exports = UserController;
