@@ -83,6 +83,17 @@ class VendorController {
       return res.status(500).json({ error });
     }
   }
+
+  static async DeleteVendor(req, res) {
+    try {
+      const result = await pool.query('DELETE FROM vendors WHERE vendorid=$1 RETURNING *', [
+        req.params.id,
+      ]);
+      return res.status(200).json({ message: 'Deleted', result });
+    } catch (err) {
+      return res.status(400).json(err);
+    }
+  }
 }
 
 module.exports = VendorController;
