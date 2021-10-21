@@ -12,5 +12,6 @@ router.post('/create-user/', UserController.CreateUser);
 router.post('/signin/', UserController.LoginUser);
 router.patch('/edit/:id', authenticateToken, UserController.EditUser);
 router.patch('/profileimage/:id', authenticateToken, upload.single('image'), UserController.AddProfileImage);
+router.delete('/delete/:id', authenticateToken, UserController.DeleteUser);
 
 module.exports = router;
