@@ -48,6 +48,41 @@ class VendorController {
     }
   }
 
+  static async EditVendor(req, res) {
+    try {
+      const {
+        businessname, vendortype, address, email, password,
+      } = req.body;
+      const last_edited = moment().format();
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      const result = await pool.query(
+        'UPDATE vendors SET businessname=$1, vendortype=$2, address=$3, email=$4, password=$5, last_edited=$6 WHERE vendorid=$7 RETURNING *',
+        // eslint-disable-next-line radix
+        [businessname,
+          vendortype,
+          address,
+          email,
+          hashedPassword,
+          last_edited,
+          parseInt(req.params.id)],
+      );
+      return res.status(200).json({ message: 'Vendor updated successfully', result: result.rows[0] });
+    } catch (err) {
+      return res.status(403).json(err);
+    }
+  }
+
+  static async AddProfileImage(req, res) {
+    try {
+      const last_edited = moment().format();
+      const profile_image = req.file.url;
+      const profileImage = await pool.query('UPDATE vendors SET profileimg=$1,last_edited=$2 WHERE vendorid=$3 RETURNING *', [profile_image, last_edited, parseInt(req.params.id)]);
+      return res.status(201).json({ message: 'Profile image updated', data: profileImage.rows[0].profileimg });
+    } catch (error) {
+      console.log('Server Error\n', error);
+      return res.status(500).json({ error });
+    }
+  }
 }
 
 module.exports = VendorController;
