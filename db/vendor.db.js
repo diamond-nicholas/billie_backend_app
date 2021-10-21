@@ -10,6 +10,14 @@ class VendorModel {
     );
     return user[0];
   }
+
+  static async GetVendor({ email }) {
+    const { rows: users } = await pool.query(
+      'SELECT * FROM vendors WHERE email=$1',
+      [email],
+    );
+    return users[0];
+  }
 }
 
 module.exports = VendorModel;
