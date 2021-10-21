@@ -27,12 +27,14 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.27.1",
+    "cloudinary-multer": "^1.0.2",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "multer": "^1.4.3",
+    "multer-storage-cloudinary": "^4.0.0",
     "nanoid": "^3.1.30",
     "pg": "^8.7.1"
   },
@@ -46,6 +48,6 @@
     "nodemon": "^2.0.13"
   },
   "engines": {
-    "node":"15.x"
+    "node": "15.x"
   }
 }

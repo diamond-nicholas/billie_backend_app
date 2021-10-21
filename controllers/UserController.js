@@ -47,6 +47,32 @@ class UserController {
       res.status(401).json({ error: err.message });
     }
   }
+
+  static async EditUser(req, res) {
+    try {
+      const last_edited = moment().format();
+      const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+      const result = await pool.query(
+        'UPDATE users SET name=$1, email=$2, password=$3, last_edited=$4 WHERE userid=$5 RETURNING *',
+        // eslint-disable-next-line radix
+        [req.body.name, req.body.email, hashedPassword, last_edited, parseInt(req.params.id)],
+      );
+      return res.status(200).json({ message: 'User updated successfully', result: result.rows[0] });
+    } catch (err) {
+      return res.status(403).json(err);
+    }
+  }
+
+  static async AddProfileImage(req, res) {
+    try {
+      const profile_image = req.file.url;
+      const profileImage = await pool.query('UPDATE users SET profile_image=$1 WHERE userid=$2 RETURNING *', [profile_image, parseInt(req.params.id)]);
+      return res.status(201).json({ message: 'Profile image updated', data: profileImage.rows[0].profile_image });
+    } catch (error) {
+      console.log('Server Error\n', error);
+      return res.status(500).json({ error });
+    }
+  }
 }
 
 module.exports = UserController;
