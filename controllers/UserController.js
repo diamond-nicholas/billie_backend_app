@@ -19,9 +19,21 @@ class UserController {
       const user = await UserModel.CreateNewUser({
         name, username: `user${nanoid(10)}`, email, password: hashedPassword, date_created,
       });
-      return res.status(201).json({ message: 'Account created successfully', user });
+      return res.status(201).json({ message: 'Account created successfully',user });
     } catch (err) {
       res.status(400).json({ message: err });
+    }
+  }
+
+  static async GetUser(req, res) {
+    try {
+      const users = await pool.query(
+        'SELECT * FROM users WHERE id=$1',
+        [parseInt(req.params.id)],
+      );
+      res.status(200).json(users);
+    } catch (err) {
+      res.status(400).json(err);
     }
   }
 
@@ -73,7 +85,7 @@ class UserController {
       return res.status(500).json({ error });
     }
   }
-  
+
   static async DeleteUser(req, res) {
     try {
       const result = await pool.query('DELETE FROM users WHERE userid=$1 RETURNING *', [
