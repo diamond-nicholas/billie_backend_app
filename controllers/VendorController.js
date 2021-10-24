@@ -76,7 +76,7 @@ class VendorController {
     try {
       const last_edited = moment().format();
       const profile_image = req.file.url;
-      const profileImage = await pool.query('UPDATE vendors SET profileimg=$1,last_edited=$2 WHERE vendorid=$3 RETURNING *', [profile_image, last_edited, parseInt(req.params.id)]);
+      const profileImage = await pool.query('UPDATE vendors SET profile_image=$1,last_edited=$2 WHERE vendorid=$3 RETURNING *', [profile_image, last_edited, parseInt(req.params.id)]);
       return res.status(201).json({ message: 'Profile image updated', data: profileImage.rows[0].profileimg });
     } catch (error) {
       console.log('Server Error\n', error);

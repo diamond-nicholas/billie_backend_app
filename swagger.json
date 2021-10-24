@@ -1,0 +1,464 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "Billie Backend App",
+    "description": "API application for Billie service delivery",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "https://billie-app-backend.herokuapp.com",
+  "basePath": "/api/v2",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/users/create-user": {
+      "post": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "user sign up",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "signup",
+            "description": "Endpoint to create a new user",
+            "schema": {
+              "$ref": "#/definitions/user-signup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Account created Successfully"
+          }
+        }
+      }
+    },
+    "/users/signin": {
+      "post": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "User login",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "signin",
+            "description": "Sign In Payload",
+            "schema": {
+              "$ref": "#/definitions/user-login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          }
+        }
+      }
+    },
+    "/users/edit/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to edit",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "edit",
+          "description": "Edit user Payload",
+          "schema": {
+            "$ref": "#/definitions/user"
+          }
+        }
+      ],
+      "patch": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Update user with given ID",
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+    },
+    "/users/profileimage/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to add profile image",
+          "type": "integer"
+        },
+        {
+          "in": "formData",
+          "name": "image",
+          "type": "file",
+          "description": "Profile Image Payload"
+        }
+      ],
+      "patch": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Update user profile image with given ID",
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "schema": {
+              "$ref": "#/definitions/user/properties/profile_image"
+            }
+          }
+        }
+      }
+    },
+    "/users/delete/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to delete",
+          "type": "integer"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Delete user of given ID",
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/vendors/create-vendor/": {
+      "post": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "summary": "Vendor sign up",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "signup",
+            "description": "Endpoint to create a new user",
+            "schema": {
+              "$ref": "#/definitions/vendor-signup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Account created Successfully"
+          }
+        }
+      }
+    },
+    "/vendors/signin/": {
+      "post": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "summary": "Vendor sign in",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "signin",
+            "description": "Endpoint to signin vendor",
+            "schema": {
+              "$ref": "#/definitions/vendor-login"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Vendor logged in Successfully"
+          }
+        }
+      }
+    },
+    "/vendors/edit/{id}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor that we want to edit",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "edit",
+          "description": "Edit user Payload",
+          "schema": {
+            "$ref": "#/definitions/vendor"
+          }
+        }
+      ],
+      "patch": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "summary": "Update vendor with given ID",
+        "responses": {
+          "200": {
+            "description": "Vendor updated successfully",
+            "schema": {
+              "$ref": "#/definitions/vendor"
+            }
+          }
+        }
+      }
+    },
+    "/vendors/profileimage/{vendorId}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor that we want to add profile image",
+          "type": "integer"
+        },
+        {
+          "in": "formData",
+          "name": "image",
+          "type": "file",
+          "description": "Profile Image Payload"
+        }
+      ],
+      "patch": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "summary": "Update user profile image with given ID",
+        "responses": {
+          "200": {
+            "description": "Vendor updated successfully",
+            "schema": {
+              "$ref": "#/definitions/vendor/properties/profile_image"
+            }
+          }
+        }
+      }
+    },
+    "/vendors/delete/{vendorId}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor that we want to delete",
+          "type": "integer"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "summary": "Delete vendor of given ID",
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "user": {
+      "required": [
+        "name",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "userid": {
+          "type": "integer",
+          "uniqueItems": true,
+          "readOnly": true
+        },
+        "name":{
+          "type":"string",
+          "uniqueItems":false
+        },
+        "username":{
+          "type":"string",
+          "uniqueItems":true,
+          "readOnly": true
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        },
+        "profile_image": {
+          "type": "string",
+          "readOnly": true
+        },
+        "last_edited": {
+          "type": "string",
+          "readOnly": true
+        },
+        "last_loggedin": {
+          "type": "string",
+          "readOnly": true
+        },
+        "phone_number": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "user-signup":{
+      "required": [
+        "name",
+        "email",
+        "password"
+      ],
+      "properties":{
+        "name":{
+          "type":"string",
+          "uniqueItems":false
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "user-login":{
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties":{
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "vendor":{
+      "required": [
+        "businessname",
+        "vendortype",
+        "address",
+        "email",
+        "password"
+      ],
+      "properties":{
+        "vendorid":{
+          "type":"integer"
+        },
+        "username":{
+          "type":"string",
+          "uniqueItems": true,
+          "readOnly": true
+        },
+        "businessname": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "vendortype": {
+          "type": "string",
+          "enum": ["food","drink","beauty","health"]
+        },
+        "address": {
+          "type": "string"
+        },
+        "profile_image":{
+          "type":"string"
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        },
+        "date_created":{
+          "type": "string",
+          "readOnly": true
+        },
+        "last_loggedin":{
+          "type": "string",
+          "readOnly": true
+        },
+        "last_edited":{
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "vendor-signup":{
+      "required": [
+        "businessname",
+        "vendortype",
+        "address",
+        "email",
+        "password"
+      ],
+      "properties":{
+        "businessname": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "vendortype": {
+          "type": "string",
+          "enum": ["food","drink","beauty","health"],
+          "uniqueItems": true
+        },
+        "address": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "vendor-login":{
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties":{
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  }     
+}
