@@ -13,6 +13,7 @@ router.post('/signin/', UserController.LoginUser);
 router.patch('/edit/:id', authenticateToken, UserController.EditUser);
 router.patch('/profileimage/:id', authenticateToken, upload.single('image'), UserController.AddProfileImage);
 router.delete('/delete/:id', authenticateToken, UserController.DeleteUser);
-router.get('/get/:id', UserController.GetUser);
+router.get('/get/:id', authenticateToken, UserController.GetUser);
+router.get('/get/',authenticateToken, UserController.GetAllUsers);
 
 module.exports = router;

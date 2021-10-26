@@ -38,6 +38,18 @@ class UserController {
     }
   }
 
+  static async GetAllUsers(req, res) {
+    try {
+      const users = await pool.query(
+        'SELECT * FROM users',
+      );
+      // if (users.rows.length === 0)res.status(200).json({ message: 'No users exist' });
+      res.status(200).json({ message: 'All users retrieved successfully', users: users.rows });
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  }
+
   static async LoginUser(req, res) {
     try {
       const { email, password } = req.body;
