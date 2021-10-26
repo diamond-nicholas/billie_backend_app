@@ -19,7 +19,7 @@ class UserController {
       const user = await UserModel.CreateNewUser({
         name, username: `user${nanoid(10)}`, email, password: hashedPassword, date_created,
       });
-      return res.status(201).json({ message: 'Account created successfully',user });
+      return res.status(201).json({ message: 'Account created successfully', user });
     } catch (err) {
       res.status(400).json({ message: err });
     }
@@ -28,10 +28,11 @@ class UserController {
   static async GetUser(req, res) {
     try {
       const users = await pool.query(
-        'SELECT * FROM users WHERE id=$1',
+        'SELECT * FROM users WHERE userid=$1',
         [parseInt(req.params.id)],
       );
-      res.status(200).json(users);
+      if (users.rows.length === 0)res.status(200).json({ message: 'No such user exists' });
+      res.status(200).json({ message: 'User info retrieved successfully', user: users.rows[0] });
     } catch (err) {
       res.status(400).json(err);
     }
