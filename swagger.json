@@ -61,6 +61,31 @@
         }
       }
     },
+    "/users/get/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to get",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Retrieve user with given ID",
+        "responses": {
+          "200": {
+            "description": "User info retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+    },
     "/users/edit/{userId}": {
       "parameters": [
         {
