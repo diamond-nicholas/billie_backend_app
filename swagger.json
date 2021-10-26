@@ -211,6 +211,31 @@
         }
       }
     },
+    "/vendors/get/{vendorId}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor that we want to get",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "summary": "Retrieve vendor with given ID",
+        "responses": {
+          "200": {
+            "description": "User info retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/vendor"
+            }
+          }
+        }
+      }
+    },
     "/vendors/signin/": {
       "post": {
         "tags": [
