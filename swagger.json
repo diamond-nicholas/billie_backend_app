@@ -9,11 +9,18 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "https://billie-app-backend.herokuapp.com",
+  "host": "billie-app-backend.herokuapp.com",
   "basePath": "/api/v2",
   "schemes": [
     "https"
   ],
+  "securityDefinitions": {
+    "authentication":{
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
   "paths": {
     "/users/create-user": {
       "post": {
@@ -75,6 +82,11 @@
         "tags": [
           "User Authentication"
         ],
+        "security": [
+          {
+             "bearerAuth": []
+          }
+       ],
         "summary": "Retrieve user with given ID",
         "responses": {
           "200": {

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization || req.body.token || req.query.token || req.headers['x-access-token'];
   const token = authHeader && authHeader.split(' ')[1];
   if (token === null) return res.status(401).json({ error: 'Null token' });
   // eslint-disable-next-line consistent-return
