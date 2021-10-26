@@ -86,6 +86,22 @@
         }
       }
     },
+    "/users/get/": {
+      "get": {
+        "tags": [
+          "User Authentication"
+        ],
+        "summary": "Retrieve all users",
+        "responses": {
+          "200": {
+            "description": "All users retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        }
+      }
+    },
     "/users/edit/{userId}": {
       "parameters": [
         {
