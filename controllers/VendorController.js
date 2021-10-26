@@ -25,6 +25,19 @@ class VendorController {
     }
   }
 
+  static async GetVendor(req, res) {
+    try {
+      const vendors = await pool.query(
+        'SELECT * FROM vendors WHERE vendorid=$1',
+        [parseInt(req.params.id)],
+      );
+      if (vendors.rows.length === 0)res.status(200).json({ message: 'No such vendor exists' });
+      res.status(200).json({ message: 'Vendor info retrieved successfully', vendor: vendors.rows[0] });
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  }
+
   static async LoginUser(req, res) {
     try {
       const { email, password } = req.body;
