@@ -27,6 +27,8 @@
         "tags": [
           "User Authentication"
         ],
+        "consumes":["application/json"],
+        "produces":["application/json"],
         "summary": "user sign up",
         "parameters": [
           {
@@ -50,6 +52,8 @@
         "tags": [
           "User Authentication"
         ],
+        "consumes":["application/json"],
+        "produces":["application/json"],
         "summary": "User login",
         "parameters": [
           {
@@ -136,6 +140,8 @@
         "tags": [
           "User Authentication"
         ],
+        "consumes":["application/json"],
+        "produces":["application/json"],
         "summary": "Update user with given ID",
         "responses": {
           "200": {
@@ -205,6 +211,8 @@
         "tags": [
           "Vendor Authentication"
         ],
+        "consumes":["application/json"],
+        "produces":["application/json"],
         "summary": "Vendor sign up",
         "parameters": [
           {
@@ -253,6 +261,8 @@
         "tags": [
           "Vendor Authentication"
         ],
+        "consumes":["application/json"],
+        "produces":["application/json"],
         "summary": "Vendor sign in",
         "parameters": [
           {
