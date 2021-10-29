@@ -5,6 +5,7 @@ const swaggerUi = require('swagger-ui-express');
 
 const userRouter = require('./routes/userRoutes');
 const vendorRouter = require('./routes/vendorRoutes');
+const productRouter = require('./routes/productRoutes');
 const swaggerDocs = require('./swagger.json');
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors());
 
 app.use('/api/v2/users', userRouter);
 app.use('/api/v2/vendors', vendorRouter);
+app.use('/api/v2/products', productRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 

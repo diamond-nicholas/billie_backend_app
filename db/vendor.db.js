@@ -11,12 +11,19 @@ class VendorModel {
     return user[0];
   }
 
-  static async GetVendor({ email }) {
-    const { rows: users } = await pool.query(
+  static async IsVendor(email) {
+    const vendors = await pool.query(
+      'SELECT * FROM vendors WHERE email=$1', [email],
+    );
+    return vendors;
+  }
+
+  static async GetVendor(email) {
+    const users = await pool.query(
       'SELECT * FROM vendors WHERE email=$1',
       [email],
     );
-    return users[0];
+    return users;
   }
 }
 
