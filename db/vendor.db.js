@@ -1,4 +1,6 @@
+/* eslint-disable linebreak-style */
 const pool = require('../config/db');
+const authenticateToken = require('../auth/auth');
 
 class VendorModel {
   static async CreateNewVendor({
@@ -9,13 +11,6 @@ class VendorModel {
       [username, businessname, vendortype, address, email, password, date_created],
     );
     return user[0];
-  }
-
-  static async IsVendor(email) {
-    const vendors = await pool.query(
-      'SELECT * FROM vendors WHERE email=$1', [email],
-    );
-    return vendors;
   }
 
   static async GetVendor(email) {

@@ -15,7 +15,7 @@
     "https"
   ],
   "securityDefinitions": {
-    "authentication":{
+    "authentication": {
       "type": "apiKey",
       "name": "Authorization",
       "in": "header"
@@ -27,8 +27,12 @@
         "tags": [
           "User Authentication"
         ],
-        "consumes":["application/json"],
-        "produces":["application/json"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "summary": "user sign up",
         "parameters": [
           {
@@ -52,8 +56,12 @@
         "tags": [
           "User Authentication"
         ],
-        "consumes":["application/json"],
-        "produces":["application/json"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "summary": "User login",
         "parameters": [
           {
@@ -88,9 +96,9 @@
         ],
         "security": [
           {
-             "bearerAuth": []
+            "bearerAuth": []
           }
-       ],
+        ],
         "summary": "Retrieve user with given ID",
         "responses": {
           "200": {
@@ -140,8 +148,12 @@
         "tags": [
           "User Authentication"
         ],
-        "consumes":["application/json"],
-        "produces":["application/json"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "summary": "Update user with given ID",
         "responses": {
           "200": {
@@ -211,8 +223,12 @@
         "tags": [
           "Vendor Authentication"
         ],
-        "consumes":["application/json"],
-        "produces":["application/json"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "summary": "Vendor sign up",
         "parameters": [
           {
@@ -256,13 +272,33 @@
         }
       }
     },
+    "/vendors/get/": {
+      "get": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "summary": "Retrieve all vendors",
+        "responses": {
+          "200": {
+            "description": "Vendors retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/vendor"
+            }
+          }
+        }
+      }
+    },
     "/vendors/signin/": {
       "post": {
         "tags": [
           "Vendor Authentication"
         ],
-        "consumes":["application/json"],
-        "produces":["application/json"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
         "summary": "Vendor sign in",
         "parameters": [
           {
@@ -366,6 +402,188 @@
           }
         }
       }
+    },
+    "/products/create-products/": {
+      "post": {
+        "tags": [
+          "Product CRUD"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Product create",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "product_title",
+            "description": "Product title",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "displayimg",
+            "type": "file",
+            "description": "Profile Image Payload"
+          },
+          {
+            "in": "body",
+            "name": "price",
+            "description": "Product price",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "body",
+            "name": "description",
+            "description": "Product description",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "status",
+            "description": "Product status",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/product/properties/status"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product created Successfully",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/products/get/{productid}": {
+      "parameters": [
+        {
+          "name": "productId",
+          "in": "path",
+          "required": true,
+          "description": "ID of product that we want to get",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Product CRUD"
+        ],
+        "summary": "Retrieve product with given ID",
+        "responses": {
+          "200": {
+            "description": "Product retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/products/get/": {
+      "get": {
+        "tags": [
+          "Product CRUD"
+        ],
+        "summary": "Retrieve all products",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/products/edit/{productid}": {
+      "parameters": [
+        {
+          "name": "productId",
+          "in": "path",
+          "required": true,
+          "description": "ID of product that we want to get",
+          "type": "integer"
+        }
+      ],
+      "patch": {
+        "tags": [
+          "Product CRUD"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Product edit",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "product_title",
+            "description": "Product title",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "displayimg",
+            "type": "file",
+            "description": "Profile Image Payload"
+          },
+          {
+            "in": "body",
+            "name": "price",
+            "description": "Product price",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "in": "body",
+            "name": "description",
+            "description": "Product description",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "status",
+            "description": "Product status",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/product/properties/status"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Edited product Successfully",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -381,13 +599,13 @@
           "uniqueItems": true,
           "readOnly": true
         },
-        "name":{
-          "type":"string",
-          "uniqueItems":false
+        "name": {
+          "type": "string",
+          "uniqueItems": false
         },
-        "username":{
-          "type":"string",
-          "uniqueItems":true,
+        "username": {
+          "type": "string",
+          "uniqueItems": true,
           "readOnly": true
         },
         "email": {
@@ -415,16 +633,16 @@
         }
       }
     },
-    "user-signup":{
+    "user-signup": {
       "required": [
         "name",
         "email",
         "password"
       ],
-      "properties":{
-        "name":{
-          "type":"string",
-          "uniqueItems":false
+      "properties": {
+        "name": {
+          "type": "string",
+          "uniqueItems": false
         },
         "email": {
           "type": "string",
@@ -435,12 +653,12 @@
         }
       }
     },
-    "user-login":{
+    "user-login": {
       "required": [
         "email",
         "password"
       ],
-      "properties":{
+      "properties": {
         "email": {
           "type": "string",
           "uniqueItems": true
@@ -450,7 +668,7 @@
         }
       }
     },
-    "vendor":{
+    "vendor": {
       "required": [
         "businessname",
         "vendortype",
@@ -458,12 +676,12 @@
         "email",
         "password"
       ],
-      "properties":{
-        "vendorid":{
-          "type":"integer"
+      "properties": {
+        "vendorid": {
+          "type": "integer"
         },
-        "username":{
-          "type":"string",
+        "username": {
+          "type": "string",
           "uniqueItems": true,
           "readOnly": true
         },
@@ -473,13 +691,18 @@
         },
         "vendortype": {
           "type": "string",
-          "enum": ["food","drink","beauty","health"]
+          "enum": [
+            "food",
+            "drink",
+            "beauty",
+            "health"
+          ]
         },
         "address": {
           "type": "string"
         },
-        "profile_image":{
-          "type":"string"
+        "profile_image": {
+          "type": "string"
         },
         "email": {
           "type": "string",
@@ -488,21 +711,21 @@
         "password": {
           "type": "string"
         },
-        "date_created":{
+        "date_created": {
           "type": "string",
           "readOnly": true
         },
-        "last_loggedin":{
+        "last_loggedin": {
           "type": "string",
           "readOnly": true
         },
-        "last_edited":{
+        "last_edited": {
           "type": "string",
           "readOnly": true
         }
       }
     },
-    "vendor-signup":{
+    "vendor-signup": {
       "required": [
         "businessname",
         "vendortype",
@@ -510,14 +733,19 @@
         "email",
         "password"
       ],
-      "properties":{
+      "properties": {
         "businessname": {
           "type": "string",
           "uniqueItems": true
         },
         "vendortype": {
           "type": "string",
-          "enum": ["food","drink","beauty","health"],
+          "enum": [
+            "food",
+            "drink",
+            "beauty",
+            "health"
+          ],
           "uniqueItems": true
         },
         "address": {
@@ -533,12 +761,12 @@
         }
       }
     },
-    "vendor-login":{
+    "vendor-login": {
       "required": [
         "email",
         "password"
       ],
-      "properties":{
+      "properties": {
         "email": {
           "type": "string",
           "uniqueItems": true
@@ -547,6 +775,59 @@
           "type": "string"
         }
       }
+    },
+    "product": {
+      "required": [
+        "product_title",
+        "price",
+        "description",
+        "status",
+        "image"
+      ],
+      "properties": {
+        "productid": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "vendorid": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "businessname": {
+          "type": "string",
+          "uniqueItems": true,
+          "readOnly": true
+        },
+        "product_title": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "displayimg": {
+          "type": "string",
+          "uniqueItems": false
+        },
+        "price": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "available",
+            "unavailable"
+          ]
+        },
+        "date_created": {
+          "type": "string",
+          "readOnly": true
+        },
+        "last_edited": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
     }
-  }     
+  }
 }
