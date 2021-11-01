@@ -11,20 +11,17 @@ const authenticateToken = (req, res, next) => {
   jwt.verify(token, process.env.SECRET, (error, user) => {
     if (error) return res.status(403).json({ error: error.message });
     req.user = user;
+    res.locals.user = req.user;
     next();
   });
 };
 
-// const isVendor = async (req, res, next) => {
-//   const { email } = req.user;
-//   const vendors = await pool.query(
-//     'SELECT * FROM vendors WHERE email=$1', [email],
-//   );
-//   const vendor = vendors.rows[0];
-//   if (vendor.length < 1)res.status(403).json({ message: 'Only authorized vendors can post products' });
-//   else {
-//     req.vendor = vendor;
-//   }
+// const authorizedVendor = (req, res, next) => {
+//   const { email } = res.locals.user;
+//   const vendor = VendorModel.GetVendor(email);
+//   if (vendor.rows[0].length < 1) return res.status(200).json({ mesage: 'Only authorized vendors can post' });
+
+//   req.vendor = vendor;
 //   next();
 // };
 
