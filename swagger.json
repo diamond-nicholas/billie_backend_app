@@ -427,7 +427,7 @@
           },
           {
             "in": "formData",
-            "name": "displayimg",
+            "name": "image",
             "type": "file",
             "description": "Profile Image Payload"
           },
@@ -543,7 +543,7 @@
           },
           {
             "in": "formData",
-            "name": "displayimg",
+            "name": "image",
             "type": "file",
             "description": "Profile Image Payload"
           },
@@ -588,10 +588,10 @@
     "/products/delete/{productid}": {
       "parameters": [
         {
-          "name": "vendorId",
+          "name": "productId",
           "in": "path",
           "required": true,
-          "description": "ID of vendor that we want to delete",
+          "description": "ID of product that we want to delete",
           "type": "integer"
         }
       ],
@@ -603,6 +603,31 @@
         "responses": {
           "200": {
             "description": "Deleted product successfully",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/products/vendor/{vendorid}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor we want to get products from",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Product CRUD"
+        ],
+        "summary": "Retrieve products of given vendor",
+        "responses": {
+          "200": {
+            "description": "Vendor product retrieved successfully",
             "schema": {
               "$ref": "#/definitions/product"
             }
