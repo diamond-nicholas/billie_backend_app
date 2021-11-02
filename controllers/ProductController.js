@@ -106,6 +106,30 @@ class ProductController {
       res.status(403).json(err);
     }
   }
+
+  static async ProductsVendorId(req, res) {
+    try {
+      const { id: vendorid } = req.params;
+      const vendorProduct = await pool.query('SELECT * FROM products WHERE products.vendorid=$1', [parseInt(vendorid)]);
+      if (vendorProduct.rows.length < 1) res.status(400).json({ message: 'No such vendor exists' });
+
+      res.status(200).json({ message: 'Vendor product retrieved successfully', product: vendorProduct.rows })
+    } catch (err) {
+      res.status(403).json(err);
+    }
+  }
+
+  // static async ProductsBusinessName(req, res) {
+  //   try {
+  //     const { businessname } = req.params;
+  //     const vendorProduct = await pool.query('SELECT * FROM products WHERE products.businessname=$1', [businessname]);
+  //     if (vendorProduct.rows.length < 1) res.status(400).json({ message: 'No such vendor exists' });
+
+  //     res.status(200).json({ message: 'Vendor product retrieved successfully', product: vendorProduct.rows })
+  //   } catch (err) {
+  //     res.status(403).json(err);
+  //   }
+  // }
 }
 
 module.exports = ProductController;

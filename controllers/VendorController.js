@@ -17,7 +17,7 @@ class VendorController {
       const hashedPassword = bcrypt.hashSync(password, 10);
       const date_created = moment().format();
       const vendor = await VendorModel.CreateNewVendor({
-        username: `vendor${nanoid(10)}`, businessname, vendortype, address, email, password: hashedPassword, date_created,
+        username: `vendor${nanoid(10)}`, businessname: businessname.toLower(), vendortype: vendortype.toLower(), address, email, password: hashedPassword, date_created,
       });
       return res.status(201).json({ message: 'Account created successfully', vendor });
     } catch (err) {
@@ -31,7 +31,7 @@ class VendorController {
         'SELECT * FROM vendors WHERE vendorid=$1',
         [parseInt(req.params.id)],
       );
-      if (vendors.rows.length === 0)res.status(200).json({ message: 'No such vendor exists' });
+      if (vendors.rows.length === 0) res.status(200).json({ message: 'No such vendor exists' });
       res.status(200).json({ message: 'Vendor info retrieved successfully', vendor: vendors.rows[0] });
     } catch (err) {
       res.status(400).json(err);
@@ -43,7 +43,7 @@ class VendorController {
       const vendors = await pool.query(
         'SELECT * FROM vendors',
       );
-      if (vendors.rows.length === 0)res.status(200).json({ message: 'No such vendors exists' });
+      if (vendors.rows.length === 0) res.status(200).json({ message: 'No such vendors exists' });
       res.status(200).json({ message: 'Vendors retrieved successfully', vendor: vendors.rows[0] });
     } catch (err) {
       res.status(400).json(err);
@@ -80,15 +80,18 @@ class VendorController {
       } = req.body;
       const last_edited = moment().format();
       const hashedPassword = bcrypt.hashSync(password, 10);
+      const edited = {
+        businessname: businessname.toLower(),
+        vendortype: vendortype.toLower(),
+        address,
+        email,
+        password,
+        last_edited
+      }
       const result = await pool.query(
         'UPDATE vendors SET businessname=$1, vendortype=$2, address=$3, email=$4, password=$5, last_edited=$6 WHERE vendorid=$7 RETURNING *',
         // eslint-disable-next-line radix
-        [businessname,
-          vendortype,
-          address,
-          email,
-          hashedPassword,
-          last_edited,
+        [edited,
           parseInt(req.params.id)],
       );
       return res.status(200).json({ message: 'Vendor updated successfully', result: result.rows[0] });

@@ -12,5 +12,7 @@ router.get('/get/:id', authenticateToken, ProductController.GetOne);
 router.get('/get/', authenticateToken, ProductController.GetAll);
 router.patch('/edit/:id', authenticateToken, upload.single('image'), ProductController.Edit);
 router.delete('/delete/:id', authenticateToken, ProductController.Delete);
+router.get('/vendor/:id', authenticateToken, ProductController.ProductsVendorId);
+// router.get('/vendor/:businessname', authenticateToken, ProductController.ProductsBusinessName);
 
 module.exports = router;
