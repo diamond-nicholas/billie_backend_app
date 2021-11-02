@@ -584,6 +584,31 @@
           }
         }
       }
+    },
+    "/products/delete/{productid}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor that we want to delete",
+          "type": "integer"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Product CRUD"
+        ],
+        "summary": "Delete product of given ID",
+        "responses": {
+          "200": {
+            "description": "Deleted product successfully",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

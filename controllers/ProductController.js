@@ -1,9 +1,6 @@
 const moment = require('moment');
 const pool = require('../config/db');
 
-const ProductModel = require('../db/product.db');
-const { NewProduct, GetProduct, EditProduct } = require('../db/vendor.db');
-
 class ProductController {
   static async Create(req, res) {
     try {
@@ -86,6 +83,27 @@ class ProductController {
       res.status(200).json({ message: 'Edited product successfully', product: product.rows[0] });
     } catch (err) {
       res.status(400).json(err);
+    }
+  }
+
+  static async Delete(req, res) {
+    try {
+      const { email } = req.user;
+      const vendors = await pool.query(
+        'SELECT * FROM vendors WHERE email=$1', [email],
+      );
+      const vendor = vendors.rows[0];
+      if (vendor.length < 1) res.status(403).json({ message: 'Only authorized vendors can delete products' });
+      else {
+        req.vendor = vendor;
+      }
+      const { id: productid } = req.params;
+      const deleteProduct = await pool.query('DELETE FROM products WHERE productid=$1 RETURNING *', [parseInt(productid)]);
+      if (deleteProduct.rows[0].length < 1) res.status(400).json({ message: 'No such product exists' });
+
+      res.status(200).json({ message: 'Deleted product successfully', product: deleteProduct.rows[0] })
+    } catch (err) {
+      res.status(403).json(err);
     }
   }
 }

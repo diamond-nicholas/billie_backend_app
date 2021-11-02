@@ -11,5 +11,6 @@ router.post('/create-product', authenticateToken, upload.single('image'), Produc
 router.get('/get/:id', authenticateToken, ProductController.GetOne);
 router.get('/get/', authenticateToken, ProductController.GetAll);
 router.patch('/edit/:id', authenticateToken, upload.single('image'), ProductController.Edit);
+router.delete('/delete/:id', authenticateToken, ProductController.Delete);
 
 module.exports = router;
