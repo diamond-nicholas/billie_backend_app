@@ -115,6 +115,11 @@
         "tags": [
           "User Authentication"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Retrieve all users",
         "responses": {
           "200": {
@@ -147,6 +152,11 @@
       "patch": {
         "tags": [
           "User Authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "consumes": [
           "application/json"
@@ -185,6 +195,11 @@
         "tags": [
           "User Authentication"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Update user profile image with given ID",
         "responses": {
           "200": {
@@ -209,6 +224,11 @@
       "delete": {
         "tags": [
           "User Authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "summary": "Delete user of given ID",
         "responses": {
@@ -247,47 +267,6 @@
         }
       }
     },
-    "/vendors/get/{vendorId}": {
-      "parameters": [
-        {
-          "name": "vendorId",
-          "in": "path",
-          "required": true,
-          "description": "ID of vendor that we want to get",
-          "type": "integer"
-        }
-      ],
-      "get": {
-        "tags": [
-          "Vendor Authentication"
-        ],
-        "summary": "Retrieve vendor with given ID",
-        "responses": {
-          "200": {
-            "description": "User info retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/vendor"
-            }
-          }
-        }
-      }
-    },
-    "/vendors/get/": {
-      "get": {
-        "tags": [
-          "Vendor Authentication"
-        ],
-        "summary": "Retrieve all vendors",
-        "responses": {
-          "200": {
-            "description": "Vendors retrieved successfully",
-            "schema": {
-              "$ref": "#/definitions/vendor"
-            }
-          }
-        }
-      }
-    },
     "/vendors/signin/": {
       "post": {
         "tags": [
@@ -317,6 +296,57 @@
         }
       }
     },
+    "/vendors/get/{vendorId}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor that we want to get",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve vendor with given ID",
+        "responses": {
+          "200": {
+            "description": "User info retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/vendor"
+            }
+          }
+        }
+      }
+    },
+    "/vendors/get/": {
+      "get": {
+        "tags": [
+          "Vendor Authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all vendors",
+        "responses": {
+          "200": {
+            "description": "Vendors retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/vendor"
+            }
+          }
+        }
+      }
+    },
     "/vendors/edit/{id}": {
       "parameters": [
         {
@@ -338,6 +368,11 @@
       "patch": {
         "tags": [
           "Vendor Authentication"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "summary": "Update vendor with given ID",
         "responses": {
@@ -370,6 +405,11 @@
         "tags": [
           "Vendor Authentication"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Update user profile image with given ID",
         "responses": {
           "200": {
@@ -395,6 +435,11 @@
         "tags": [
           "Vendor Authentication"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Delete vendor of given ID",
         "responses": {
           "200": {
@@ -407,6 +452,11 @@
       "post": {
         "tags": [
           "Product CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "consumes": [
           "multipart/form-data"
@@ -483,6 +533,11 @@
         "tags": [
           "Product CRUD"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Retrieve product with given ID",
         "responses": {
           "200": {
@@ -498,6 +553,11 @@
       "get": {
         "tags": [
           "Product CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "summary": "Retrieve all products",
         "responses": {
@@ -523,6 +583,11 @@
       "patch": {
         "tags": [
           "Product CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "consumes": [
           "multipart/form-data"
@@ -599,6 +664,11 @@
         "tags": [
           "Product CRUD"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Delete product of given ID",
         "responses": {
           "200": {
@@ -624,12 +694,273 @@
         "tags": [
           "Product CRUD"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "summary": "Retrieve products of given vendor",
         "responses": {
           "200": {
             "description": "Vendor product retrieved successfully",
             "schema": {
               "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/cart/add/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user to add to cart",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "productid",
+          "description": "Id of product",
+          "schema": {
+            "$ref": "#/definitions/cart/properties/productid"
+          }
+        },
+        {
+          "in": "body",
+          "name": "quantity",
+          "description": "Quantity of product in cart",
+          "schema": {
+            "$ref": "#/definitions/cart/properties/quantity"
+          }
+        }
+      ],
+      "post": {
+        "tags": [
+          "Cart CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Add to cart",
+        "responses": {
+          "201": {
+            "description": "Successfully added to cart",
+            "schema": {
+              "$ref": "#/definitions/cart"
+            }
+          }
+        }
+      }
+    },
+    "/cart/increase/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user in cart",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "productid",
+          "description": "Id of product to increase",
+          "schema": {
+            "$ref": "#/definitions/cart/properties/productid"
+          }
+        }
+      ],
+      "patch": {
+        "tags": [
+          "Cart CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Increase cart item quantity",
+        "responses": {
+          "201": {
+            "description": "Quantity of product increased",
+            "schema": {
+              "$ref": "#/definitions/cart"
+            }
+          }
+        }
+      }
+    },
+    "/cart/reduce/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user in cart",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "productid",
+          "description": "Id of product to reduce",
+          "schema": {
+            "$ref": "#/definitions/cart/properties/productid"
+          }
+        }
+      ],
+      "patch": {
+        "tags": [
+          "Cart CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Reduce cart item quantity",
+        "responses": {
+          "201": {
+            "description": "Quantity of product reduced",
+            "schema": {
+              "$ref": "#/definitions/cart"
+            }
+          }
+        }
+      }
+    },
+    "/cart/all/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user in cart",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Cart CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get all cart items",
+        "responses": {
+          "201": {
+            "description": "All cart items",
+            "schema": {
+              "$ref": "#/definitions/cart"
+            }
+          }
+        }
+      }
+    },
+    "/cart/delete/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user in cart",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "productid",
+          "description": "Id of product to remove",
+          "schema": {
+            "$ref": "#/definitions/cart/properties/productid"
+          }
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Cart CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Delete cart item",
+        "responses": {
+          "201": {
+            "description": "Deleted",
+            "schema": {
+              "$ref": "#/definitions/cart"
+            }
+          }
+        }
+      }
+    },
+    "/cart/clear/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user in cart",
+          "type": "integer"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Cart CRUD"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Clear cart of current user",
+        "responses": {
+          "201": {
+            "description": "Cleared",
+            "schema": {
+              "$ref": "#/definitions/cart"
             }
           }
         }
@@ -875,6 +1206,46 @@
         },
         "last_edited": {
           "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "cart": {
+      "required": [
+        "userid",
+        "productid",
+        "quantity"
+      ],
+      "properties": {
+        "cartid": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "userid": {
+          "type": "integer",
+          "readOnly": false
+        },
+        "productid": {
+          "type": "integer",
+          "readOnly": false
+        },
+        "product_title": {
+          "type": "string",
+          "readOnly": true
+        },
+        "displayimg": {
+          "type": "string",
+          "readOnly": true
+        },
+        "price": {
+          "type": "integer",
+          "readOnly": true
+        },
+        "quantity": {
+          "type": "integer"
+        },
+        "subtotal": {
+          "type": "integer",
           "readOnly": true
         }
       }
