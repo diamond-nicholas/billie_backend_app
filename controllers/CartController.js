@@ -71,6 +71,18 @@ class CartController {
       res.status(400).json(err.message);
     }
   }
+
+  static async ClearCart(req, res){
+    try {
+      const { userid } = req.params;
+      const clearCart = await CartModel.ClearCart({ userid });
+      res.status(200).json({
+        message: 'Cleared'
+      });
+    } catch (err){
+      res.status(400).json(err.message);
+    }
+  }
 }
 
 module.exports = CartController;

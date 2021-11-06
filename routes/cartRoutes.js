@@ -9,5 +9,6 @@ router.patch('/increase/:userid', authenticateToken, CartController.IncreaseQuan
 router.patch('/reduce/:userid', authenticateToken, CartController.ReduceQuantity);
 router.get('/all/:userid', authenticateToken, CartController.GetCart);
 router.delete('/delete/:userid', authenticateToken, CartController.DeleteCartItem);
+router.delete('/clear/:userid', authenticateToken, CartController.ClearCart);
 
 module.exports = router;

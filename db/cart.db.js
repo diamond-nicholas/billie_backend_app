@@ -52,8 +52,14 @@ class CartModel {
   }
 
   static async DeleteCartItem({ userid, productid }) {
-    const cart = await pool.query('DELETE FROM cart WHERE userid = $1 AND productid = $2;',
+    const cart = await pool.query('DELETE FROM cart WHERE userid = $1 AND productid = $2 RETURNING *;',
       [userid, productid]);
+    return cart;
+  }
+
+  static async ClearCart({ userid }) {
+    const cart = await pool.query('DELETE FROM cart WHERE userid=$1 RETURNING *',
+      [userid]);
     return cart;
   }
 }
