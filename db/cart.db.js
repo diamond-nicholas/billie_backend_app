@@ -38,6 +38,24 @@ class CartModel {
     );
     return cartItem;
   }
+
+  static async GetCart({ userid }) {
+    const cart = await pool.query('SELECT cart.userid, cart.productid, products.product_title, products.displayimg, products.price, cart.quantity, cart.subtotal FROM cart AS cart LEFT JOIN products AS products ON cart.productid = products.productid WHERE cart.userid = $1;',
+      [userid]);
+    return cart;
+  }
+
+  static async GetCartItem({ userid, productid }) {
+    const cart = await pool.query('SELECT cart.userid, cart.productid, products.product_title, products.displayimg, products.price, cart.quantity, cart.subtotal FROM cart AS cart LEFT JOIN products AS products ON cart.productid = products.productid WHERE cart.userid = $1 AND cart.productid = $2;',
+      [userid, productid]);
+    return cart;
+  }
+
+  static async DeleteCartItem({ userid, productid }) {
+    const cart = await pool.query('DELETE FROM cart WHERE userid = $1 AND productid = $2;',
+      [userid, productid]);
+    return cart;
+  }
 }
 
 module.exports = CartModel;

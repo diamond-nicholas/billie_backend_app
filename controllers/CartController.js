@@ -47,6 +47,30 @@ class CartController {
       res.status(400).json({ message: err.message });
     }
   }
+
+  static async GetCart(req, res){
+    try {
+      const { userid } = req.params;
+      const cart = await CartModel.GetCart({ userid });
+      res.status(200).json({ cart: cart.rows });
+    } catch (err) {
+      res.status(200).json(err.message);
+    }
+  }
+
+  static async DeleteCartItem(req, res){
+    try {
+      const { productid } = req.body;
+      const { userid } = req.params;
+      const deleteItem = await CartModel.DeleteCartItem({ userid, productid });
+      res.status(200).json({
+        message: 'Deleted',
+        deleteItem: deleteItem.rows[0],
+      });
+    } catch (err) {
+      res.status(400).json(err.message);
+    }
+  }
 }
 
 module.exports = CartController;
