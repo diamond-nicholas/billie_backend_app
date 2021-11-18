@@ -17,7 +17,7 @@ class VendorController {
       const hashedPassword = bcrypt.hashSync(password, 10);
       const date_created = moment().format();
       const vendor = await VendorModel.CreateNewVendor({
-        username: `vendor${nanoid(10)}`, businessname: businessname.toLower(), vendortype: vendortype.toLower(), address, email, password: hashedPassword, date_created,
+        username: `vendor${nanoid(10)}`, businessname, vendortype, address, email, password: hashedPassword, date_created,
       });
       return res.status(201).json({ message: 'Account created successfully', vendor });
     } catch (err) {
