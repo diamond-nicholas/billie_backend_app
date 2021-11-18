@@ -21,7 +21,7 @@ class VendorController {
       });
       return res.status(201).json({ message: 'Account created successfully', vendor });
     } catch (err) {
-      res.status(400).json({ message: err });
+      res.status(400).json(err.message);
     }
   }
 
@@ -69,7 +69,7 @@ class VendorController {
 
       res.json({ message: 'Vendor logged in successfully', token, lastLoggedIn: loggedInTime.rows[0] });
     } catch (err) {
-      res.status(401).json({ error: err.message });
+      res.status(401).json(err.message);
     }
   }
 
@@ -96,7 +96,7 @@ class VendorController {
       );
       return res.status(200).json({ message: 'Vendor updated successfully', result: result.rows[0] });
     } catch (err) {
-      return res.status(403).json(err);
+      return res.status(403).json(err.message);
     }
   }
 
@@ -108,7 +108,7 @@ class VendorController {
       return res.status(201).json({ message: 'Profile image updated', data: profileImage.rows[0].profileimg });
     } catch (error) {
       console.log('Server Error\n', error);
-      return res.status(500).json({ error });
+      return res.status(500).json(error.message);
     }
   }
 
@@ -119,7 +119,7 @@ class VendorController {
       ]);
       return res.status(200).json({ message: 'Deleted', result });
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json(err.message);
     }
   }
 }

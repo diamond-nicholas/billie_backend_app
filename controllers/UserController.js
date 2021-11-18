@@ -21,7 +21,7 @@ class UserController {
       });
       return res.status(201).json({ message: 'Account created successfully', user });
     } catch (err) {
-      res.status(400).json({ message: err });
+      res.status(400).json(err.message);
     }
   }
 
@@ -31,10 +31,10 @@ class UserController {
         'SELECT * FROM users WHERE userid=$1',
         [parseInt(req.params.id)],
       );
-      if (users.rows.length === 0)res.status(200).json({ message: 'No such user exists' });
+      if (users.rows.length === 0) res.status(200).json({ message: 'No such user exists' });
       res.status(200).json({ message: 'User info retrieved successfully', user: users.rows[0] });
     } catch (err) {
-      res.status(400).json(err);
+      res.status(400).json(err.message);
     }
   }
 
@@ -46,7 +46,7 @@ class UserController {
       // if (users.rows.length === 0)res.status(200).json({ message: 'No users exist' });
       res.status(200).json({ message: 'All users retrieved successfully', users: users.rows });
     } catch (err) {
-      res.status(400).json(err);
+      res.status(400).json(err.message);
     }
   }
 
@@ -69,7 +69,7 @@ class UserController {
 
       res.json({ message: 'User logged in successfully', token, lastLoggedIn: loggedInTime.rows[0] });
     } catch (err) {
-      res.status(401).json({ error: err.message });
+      res.status(401).json(err.message);
     }
   }
 
@@ -84,7 +84,7 @@ class UserController {
       );
       return res.status(200).json({ message: 'User updated successfully', result: result.rows[0] });
     } catch (err) {
-      return res.status(403).json(err);
+      return res.status(403).json(err.message);
     }
   }
 
@@ -95,7 +95,7 @@ class UserController {
       return res.status(201).json({ message: 'Profile image updated', data: profileImage.rows[0].profile_image });
     } catch (error) {
       console.log('Server Error\n', error);
-      return res.status(500).json({ error });
+      return res.status(500).json(error.message);
     }
   }
 
@@ -106,7 +106,7 @@ class UserController {
       ]);
       return res.status(200).json({ message: 'Deleted', result });
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json(err.message);
     }
   }
 }

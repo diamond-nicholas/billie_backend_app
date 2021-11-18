@@ -33,7 +33,7 @@ class ProductController {
           date_created]);
       res.status(201).json({ message: 'Product successfully added', product: product.rows[0] });
     } catch (err) {
-      res.status(400).json(err);
+      res.status(400).json(err.message);
     }
   }
 
@@ -44,7 +44,7 @@ class ProductController {
       if (product.rows.length < 1) res.status(200).json({ message: 'Product does not exist' });
       res.status(200).json({ product: product.rows[0] });
     } catch (err) {
-      res.status(403).json(err);
+      res.status(403).json(err.message);
     }
   }
 
@@ -53,7 +53,7 @@ class ProductController {
       const product = await pool.query('SELECT * FROM products');
       res.status(200).json({ product: product.rows[0] });
     } catch (err) {
-      res.status(403).json(err);
+      res.status(403).json(err.message);
     }
   }
 
@@ -82,7 +82,7 @@ class ProductController {
       const product = await pool.query('UPDATE products SET vendorid=$1, businessname=$2, product_title=$3, displayimg=$4, price=$5, description=$6, status=$7, last_edited=$8 WHERE productid=$9 RETURNING *', [vendorid, businessname, product_title, displayimg, price, description, status, last_edited, productid]);
       res.status(200).json({ message: 'Edited product successfully', product: product.rows[0] });
     } catch (err) {
-      res.status(400).json(err);
+      res.status(400).json(er.message);
     }
   }
 
@@ -103,7 +103,7 @@ class ProductController {
 
       res.status(200).json({ message: 'Deleted product successfully', product: deleteProduct.rows[0] })
     } catch (err) {
-      res.status(403).json(err);
+      res.status(403).json(err.message);
     }
   }
 
@@ -115,7 +115,7 @@ class ProductController {
 
       res.status(200).json({ message: 'Vendor product retrieved successfully', product: vendorProduct.rows })
     } catch (err) {
-      res.status(403).json(err);
+      res.status(403).json(err.message);
     }
   }
 
