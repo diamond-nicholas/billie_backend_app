@@ -11,9 +11,7 @@
   },
   "host": "billie-app-backend.herokuapp.com",
   "basePath": "/api/v2",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "securityDefinitions": {
     "authentication": {
       "type": "apiKey",
@@ -24,15 +22,9 @@
   "paths": {
     "/users/create-user": {
       "post": {
-        "tags": [
-          "User Authentication"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "tags": ["User Authentication"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "user sign up",
         "parameters": [
           {
@@ -53,15 +45,9 @@
     },
     "/users/signin": {
       "post": {
-        "tags": [
-          "User Authentication"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "tags": ["User Authentication"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "User login",
         "parameters": [
           {
@@ -91,9 +77,7 @@
         }
       ],
       "get": {
-        "tags": [
-          "User Authentication"
-        ],
+        "tags": ["User Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -112,9 +96,7 @@
     },
     "/users/get/": {
       "get": {
-        "tags": [
-          "User Authentication"
-        ],
+        "tags": ["User Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -150,20 +132,14 @@
         }
       ],
       "patch": {
-        "tags": [
-          "User Authentication"
-        ],
+        "tags": ["User Authentication"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Update user with given ID",
         "responses": {
           "200": {
@@ -192,9 +168,7 @@
         }
       ],
       "patch": {
-        "tags": [
-          "User Authentication"
-        ],
+        "tags": ["User Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -222,9 +196,7 @@
         }
       ],
       "delete": {
-        "tags": [
-          "User Authentication"
-        ],
+        "tags": ["User Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -240,15 +212,9 @@
     },
     "/vendors/create-vendor/": {
       "post": {
-        "tags": [
-          "Vendor Authentication"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "tags": ["Vendor Authentication"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Vendor sign up",
         "parameters": [
           {
@@ -269,15 +235,9 @@
     },
     "/vendors/signin/": {
       "post": {
-        "tags": [
-          "Vendor Authentication"
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "tags": ["Vendor Authentication"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Vendor sign in",
         "parameters": [
           {
@@ -307,9 +267,7 @@
         }
       ],
       "get": {
-        "tags": [
-          "Vendor Authentication"
-        ],
+        "tags": ["Vendor Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -328,9 +286,7 @@
     },
     "/vendors/get/": {
       "get": {
-        "tags": [
-          "Vendor Authentication"
-        ],
+        "tags": ["Vendor Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -366,9 +322,7 @@
         }
       ],
       "patch": {
-        "tags": [
-          "Vendor Authentication"
-        ],
+        "tags": ["Vendor Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -402,9 +356,7 @@
         }
       ],
       "patch": {
-        "tags": [
-          "Vendor Authentication"
-        ],
+        "tags": ["Vendor Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -432,9 +384,7 @@
         }
       ],
       "delete": {
-        "tags": [
-          "Vendor Authentication"
-        ],
+        "tags": ["Vendor Authentication"],
         "security": [
           {
             "bearerAuth": []
@@ -450,20 +400,14 @@
     },
     "/products/create-products/": {
       "post": {
-        "tags": [
-          "Product CRUD"
-        ],
+        "tags": ["Product CRUD"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
         "summary": "Product create",
         "parameters": [
           {
@@ -530,9 +474,7 @@
         }
       ],
       "get": {
-        "tags": [
-          "Product CRUD"
-        ],
+        "tags": ["Product CRUD"],
         "security": [
           {
             "bearerAuth": []
@@ -551,9 +493,26 @@
     },
     "/products/get/": {
       "get": {
-        "tags": [
-          "Product CRUD"
+        "tags": ["Product CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
+        "summary": "Retrieve all products",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/products/sample/": {
+      "get": {
+        "tags": ["Product CRUD"],
         "security": [
           {
             "bearerAuth": []
@@ -581,20 +540,14 @@
         }
       ],
       "patch": {
-        "tags": [
-          "Product CRUD"
-        ],
+        "tags": ["Product CRUD"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"],
         "summary": "Product edit",
         "parameters": [
           {
@@ -661,9 +614,7 @@
         }
       ],
       "delete": {
-        "tags": [
-          "Product CRUD"
-        ],
+        "tags": ["Product CRUD"],
         "security": [
           {
             "bearerAuth": []
@@ -691,9 +642,7 @@
         }
       ],
       "get": {
-        "tags": [
-          "Product CRUD"
-        ],
+        "tags": ["Product CRUD"],
         "security": [
           {
             "bearerAuth": []
@@ -737,20 +686,14 @@
         }
       ],
       "post": {
-        "tags": [
-          "Cart CRUD"
-        ],
+        "tags": ["Cart CRUD"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Add to cart",
         "responses": {
           "201": {
@@ -781,20 +724,14 @@
         }
       ],
       "patch": {
-        "tags": [
-          "Cart CRUD"
-        ],
+        "tags": ["Cart CRUD"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Increase cart item quantity",
         "responses": {
           "201": {
@@ -825,20 +762,14 @@
         }
       ],
       "patch": {
-        "tags": [
-          "Cart CRUD"
-        ],
+        "tags": ["Cart CRUD"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Reduce cart item quantity",
         "responses": {
           "201": {
@@ -861,20 +792,14 @@
         }
       ],
       "get": {
-        "tags": [
-          "Cart CRUD"
-        ],
+        "tags": ["Cart CRUD"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Get all cart items",
         "responses": {
           "201": {
@@ -905,20 +830,14 @@
         }
       ],
       "delete": {
-        "tags": [
-          "Cart CRUD"
-        ],
+        "tags": ["Cart CRUD"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Delete cart item",
         "responses": {
           "201": {
@@ -941,20 +860,14 @@
         }
       ],
       "delete": {
-        "tags": [
-          "Cart CRUD"
-        ],
+        "tags": ["Cart CRUD"],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "summary": "Clear cart of current user",
         "responses": {
           "201": {
@@ -969,11 +882,7 @@
   },
   "definitions": {
     "user": {
-      "required": [
-        "name",
-        "email",
-        "password"
-      ],
+      "required": ["name", "email", "password"],
       "properties": {
         "userid": {
           "type": "integer",
@@ -1015,11 +924,7 @@
       }
     },
     "user-signup": {
-      "required": [
-        "name",
-        "email",
-        "password"
-      ],
+      "required": ["name", "email", "password"],
       "properties": {
         "name": {
           "type": "string",
@@ -1035,10 +940,7 @@
       }
     },
     "user-login": {
-      "required": [
-        "email",
-        "password"
-      ],
+      "required": ["email", "password"],
       "properties": {
         "email": {
           "type": "string",
@@ -1072,12 +974,7 @@
         },
         "vendortype": {
           "type": "string",
-          "enum": [
-            "food",
-            "drink",
-            "beauty",
-            "health"
-          ]
+          "enum": ["food", "drink", "beauty", "health"]
         },
         "address": {
           "type": "string"
@@ -1121,12 +1018,7 @@
         },
         "vendortype": {
           "type": "string",
-          "enum": [
-            "food",
-            "drink",
-            "beauty",
-            "health"
-          ],
+          "enum": ["food", "drink", "beauty", "health"],
           "uniqueItems": true
         },
         "address": {
@@ -1143,10 +1035,7 @@
       }
     },
     "vendor-login": {
-      "required": [
-        "email",
-        "password"
-      ],
+      "required": ["email", "password"],
       "properties": {
         "email": {
           "type": "string",
@@ -1158,13 +1047,7 @@
       }
     },
     "product": {
-      "required": [
-        "product_title",
-        "price",
-        "description",
-        "status",
-        "image"
-      ],
+      "required": ["product_title", "price", "description", "status", "image"],
       "properties": {
         "productid": {
           "type": "integer",
@@ -1195,10 +1078,7 @@
         },
         "status": {
           "type": "string",
-          "enum": [
-            "available",
-            "unavailable"
-          ]
+          "enum": ["available", "unavailable"]
         },
         "date_created": {
           "type": "string",
@@ -1211,11 +1091,7 @@
       }
     },
     "cart": {
-      "required": [
-        "userid",
-        "productid",
-        "quantity"
-      ],
+      "required": ["userid", "productid", "quantity"],
       "properties": {
         "cartid": {
           "type": "integer",

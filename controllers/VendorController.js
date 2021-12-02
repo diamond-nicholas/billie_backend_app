@@ -41,12 +41,10 @@ class VendorController {
       );
       if (vendors.rows.length === 0)
         res.status(200).json({ message: 'No such vendor exists' });
-      res
-        .status(200)
-        .json({
-          message: 'Vendor info retrieved successfully',
-          vendor: vendors.rows[0],
-        });
+      res.status(200).json({
+        message: 'Vendor info retrieved successfully',
+        vendor: vendors.rows[0],
+      });
     } catch (err) {
       res.status(400).json(err);
     }
@@ -57,12 +55,10 @@ class VendorController {
       const vendors = await pool.query('SELECT * FROM vendors');
       if (vendors.rows.length === 0)
         res.status(200).json({ message: 'No such vendors exists' });
-      res
-        .status(200)
-        .json({
-          message: 'Vendors retrieved successfully',
-          vendor: vendors.rows,
-        });
+      res.status(200).json({
+        message: 'Vendors retrieved successfully',
+        vendor: vendors.rows,
+      });
     } catch (err) {
       res.status(400).json(err);
     }
@@ -119,12 +115,10 @@ class VendorController {
         // eslint-disable-next-line radix
         [edited, parseInt(req.params.id)]
       );
-      return res
-        .status(200)
-        .json({
-          message: 'Vendor updated successfully',
-          result: result.rows[0],
-        });
+      return res.status(200).json({
+        message: 'Vendor updated successfully',
+        result: result.rows[0],
+      });
     } catch (err) {
       return res.status(403).json(err.message);
     }
@@ -138,17 +132,27 @@ class VendorController {
         'UPDATE vendors SET profile_image=$1,last_edited=$2 WHERE vendorid=$3 RETURNING *',
         [profile_image, last_edited, parseInt(req.params.id)]
       );
-      return res
-        .status(201)
-        .json({
-          message: 'Profile image updated',
-          data: profileImage.rows[0].profileimg,
-        });
+      return res.status(201).json({
+        message: 'Profile image updated',
+        data: profileImage.rows[0].profileimg,
+      });
     } catch (error) {
       console.log('Server Error\n', error);
       return res.status(500).json(error.message);
     }
   }
+
+  //add bio to vendor
+
+  // static async addBio(req, res) {
+  //   try {
+  //     const last_edited = moment().format();
+  //     // const bio = req.body
+  //   } catch (error) {
+  //     console.log('Server Error\n', error);
+  //     return res.status(500).json(error.message);
+  //   }
+  // }
 
   static async DeleteVendor(req, res) {
     try {
