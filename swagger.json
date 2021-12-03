@@ -233,6 +233,29 @@
         }
       }
     },
+    "/vendors/addBio": {
+      "post": {
+        "tags": ["Vendor Authentication"],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Vendor bio creation",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "create bio",
+            "description": "Endpoint to add bio for vendor",
+            "schema": {
+              "$ref": "#/definitions/addBio"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Bio Added Successfully"
+          }
+        }
+      }
+    },
     "/vendors/signin/": {
       "post": {
         "tags": ["Vendor Authentication"],

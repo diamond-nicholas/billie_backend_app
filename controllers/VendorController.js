@@ -57,7 +57,7 @@ class VendorController {
         res.status(200).json({ message: 'No such vendors exists' });
       res.status(200).json({
         message: 'Vendors retrieved successfully',
-        vendor: vendors.rows,
+        vendor: vendors.rows[0],
       });
     } catch (err) {
       res.status(400).json(err);
@@ -144,15 +144,25 @@ class VendorController {
 
   //add bio to vendor
 
-  // static async addBio(req, res) {
-  //   try {
-  //     const last_edited = moment().format();
-  //     // const bio = req.body
-  //   } catch (error) {
-  //     console.log('Server Error\n', error);
-  //     return res.status(500).json(error.message);
-  //   }
-  // }
+  static async addBio(req, res) {
+    try {
+      const { bio } = req.body;
+      if (!req.body)
+        return res.status(402).json({ message: 'No request body' });
+      if (!bio)
+        return res.status(402).json({ message: 'Bio field cannot be empty' });
+      const date_created = moment().format();
+      const vendor = await VendorModel.CreateNewVendorBio({
+        bio,
+        date_created,
+      });
+      return res
+        .status(201)
+        .json({ message: 'Biography successfully', vendor });
+    } catch (err) {
+      res.status(400).json(err.message);
+    }
+  }
 
   static async DeleteVendor(req, res) {
     try {

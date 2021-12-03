@@ -6,6 +6,7 @@ const authenticateToken = require('../auth/auth');
 const upload = require('../helpers/upload');
 
 router.post('/create-vendor', VendorController.CreateVendor);
+router.post('/bio', VendorController.addBio);
 router.post('/signin', VendorController.LoginUser);
 router.patch('/edit/:id', authenticateToken, VendorController.EditVendor);
 router.patch(
