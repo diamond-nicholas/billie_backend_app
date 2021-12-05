@@ -6,7 +6,7 @@ const authenticateToken = require('../auth/auth');
 const upload = require('../helpers/upload');
 
 router.post('/create-vendor', VendorController.CreateVendor);
-router.post('/bio', VendorController.addBio);
+router.patch('/bio/:id', VendorController.addBio);
 router.post('/signin', VendorController.LoginUser);
 router.patch('/edit/:id', authenticateToken, VendorController.EditVendor);
 router.patch(
@@ -17,6 +17,6 @@ router.patch(
 );
 router.delete('/delete/:id', authenticateToken, VendorController.DeleteVendor);
 router.get('/get/:id', authenticateToken, VendorController.GetVendor);
-router.get('/get/', authenticateToken, VendorController.GetAllVendors);
+router.get('/get/', VendorController.GetAllVendors);
 
 module.exports = router;
