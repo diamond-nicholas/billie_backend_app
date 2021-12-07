@@ -18,6 +18,7 @@ class UserController {
         return res.status(402).json({ message: 'User field cannot be empty' });
       const hashedPassword = bcrypt.hashSync(password, 10);
       const date_created = moment().format();
+      console.log(req.body);
       const user = await UserModel.CreateNewUser({
         name,
         username: `user${nanoid(10)}`,
@@ -40,12 +41,10 @@ class UserController {
       ]);
       if (users.rows.length === 0)
         res.status(200).json({ message: 'No such user exists' });
-      res
-        .status(200)
-        .json({
-          message: 'User info retrieved successfully',
-          user: users.rows[0],
-        });
+      res.status(200).json({
+        message: 'User info retrieved successfully',
+        user: users.rows[0],
+      });
     } catch (err) {
       res.status(400).json(err.message);
     }
@@ -55,12 +54,10 @@ class UserController {
     try {
       const users = await pool.query('SELECT * FROM users');
       // if (users.rows.length === 0)res.status(200).json({ message: 'No users exist' });
-      res
-        .status(200)
-        .json({
-          message: 'All users retrieved successfully',
-          users: users.rows,
-        });
+      res.status(200).json({
+        message: 'All users retrieved successfully',
+        users: users.rows,
+      });
     } catch (err) {
       res.status(400).json(err.message);
     }
@@ -80,6 +77,9 @@ class UserController {
       if (!validPassword) {
         return res.status(401).json({ message: 'Invalid password' });
       }
+      const userid = await pool.query('SELECT * FROM users WHERE email=$1', [
+        email,
+      ]);
       const token = jwt.sign({ email }, process.env.SECRET, {
         expiresIn: '2d',
       });
@@ -91,6 +91,7 @@ class UserController {
 
       res.json({
         message: 'User logged in successfully',
+        userid: userid.rows[0].userid,
         token,
         lastLoggedIn: loggedInTime.rows[0],
       });
@@ -129,12 +130,10 @@ class UserController {
         'UPDATE users SET profile_image=$1 WHERE userid=$2 RETURNING *',
         [profile_image, parseInt(req.params.id)]
       );
-      return res
-        .status(201)
-        .json({
-          message: 'Profile image updated',
-          data: profileImage.rows[0].profile_image,
-        });
+      return res.status(201).json({
+        message: 'Profile image updated',
+        data: profileImage.rows[0].profile_image,
+      });
     } catch (error) {
       console.log('Server Error\n', error);
       return res.status(500).json(error.message);

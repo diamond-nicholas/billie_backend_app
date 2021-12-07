@@ -19,6 +19,6 @@ router.patch(
 );
 router.delete('/delete/:id', authenticateToken, UserController.DeleteUser);
 router.get('/get/:id', authenticateToken, UserController.GetUser);
-router.get('/get/', authenticateToken, UserController.GetAllUsers);
+router.get('/get/', UserController.GetAllUsers);
 
 module.exports = router;
