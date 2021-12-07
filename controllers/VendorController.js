@@ -160,7 +160,6 @@ class VendorController {
         'UPDATE vendors SET bio=$1, last_edited= $2 WHERE vendorid=$3 returning *',
         [bio, last_edited, parseInt(req.params.id)]
       );
-      console.log(vendor);
       return res.status(201).json({
         status: 'success',
         data: vendor,
