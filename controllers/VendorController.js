@@ -57,7 +57,7 @@ class VendorController {
         res.status(200).json({ message: 'No such vendors exists' });
       res.status(200).json({
         message: 'Vendors retrieved successfully',
-        vendor: vendors.rows[0],
+        vendor: vendors.rows,
       });
     } catch (err) {
       res.status(400).json(err);
