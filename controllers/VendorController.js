@@ -150,19 +150,21 @@ class VendorController {
 
   static async addBio(req, res) {
     try {
-      // if (!req.body)
-      //   return res.status(402).json({ message: 'No request body' });
-      // if (!bio)
-      //   return res.status(402).json({ message: 'Bio field cannot be empty' });
       const bio = req.body;
+      if (!req.body)
+        return res.status(402).json({ message: 'No request body' });
+      if (!bio)
+        return res.status(402).json({ message: 'Bio field cannot be empty' });
+
       const last_edited = moment().format();
       const vendor = await pool.query(
         'UPDATE vendors SET bio=$1, last_edited= $2 WHERE vendorid=$3 returning *',
         [bio, last_edited, parseInt(req.params.id)]
       );
+      console.log(bio);
       return res.status(201).json({
         status: 'success',
-        data: vendor,
+        data: vendor.rows,
       });
     } catch (err) {
       res.status(400).json(err.message);
