@@ -150,7 +150,8 @@ class VendorController {
 
   static async addBio(req, res) {
     try {
-      const bio = req.body;
+      const bio = req.body.bio;
+      console.log(bio);
       if (!req.body)
         return res.status(402).json({ message: 'No request body' });
       if (!bio)
@@ -163,7 +164,7 @@ class VendorController {
       );
       console.log(bio);
       return res.status(201).json({
-        status: 'success',
+        status: 'Biography added successfully',
         data: vendor.rows,
       });
     } catch (err) {
