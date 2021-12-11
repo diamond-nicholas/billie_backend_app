@@ -233,7 +233,7 @@
         }
       }
     },
-    "/vendors/addBio": {
+    "/vendors/bio": {
       "patch": {
         "tags": ["Vendor Authentication"],
         "consumes": ["application/json"],
