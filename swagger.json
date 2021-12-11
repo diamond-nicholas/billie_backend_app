@@ -234,7 +234,7 @@
       }
     },
     "/vendors/addBio": {
-      "post": {
+      "patch": {
         "tags": ["Vendor Authentication"],
         "consumes": ["application/json"],
         "produces": ["application/json"],
@@ -242,8 +242,8 @@
         "parameters": [
           {
             "in": "body",
-            "name": "create bio",
-            "description": "Endpoint to add bio for vendor",
+            "name": "add biography",
+            "description": "Endpoint to add biography for vendor",
             "schema": {
               "$ref": "#/definitions/addBio"
             }
@@ -251,7 +251,7 @@
         ],
         "responses": {
           "201": {
-            "description": "Bio Added Successfully"
+            "description": "Biography Added Successfully"
           }
         }
       }
@@ -515,25 +515,6 @@
       }
     },
     "/products/get/": {
-      "get": {
-        "tags": ["Product CRUD"],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Retrieve all products",
-        "responses": {
-          "200": {
-            "description": "",
-            "schema": {
-              "$ref": "#/definitions/product"
-            }
-          }
-        }
-      }
-    },
-    "/products/sample/": {
       "get": {
         "tags": ["Product CRUD"],
         "security": [
