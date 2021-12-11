@@ -245,7 +245,7 @@
             "name": "add biography",
             "description": "Endpoint to add biography for vendor",
             "schema": {
-              "$ref": "#/definitions/addBio"
+              "$ref": "#/definitions/bio"
             }
           }
         ],
