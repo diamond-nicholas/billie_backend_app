@@ -18,6 +18,9 @@ class UserController {
         return res.status(402).json({ message: 'User field cannot be empty' });
       const hashedPassword = bcrypt.hashSync(password, 10);
       const date_created = moment().format();
+      const token = jwt.sign({ email }, process.env.SECRET, {
+        expiresIn: '2d',
+      });
       console.log(req.body);
       const user = await UserModel.CreateNewUser({
         name,
@@ -28,7 +31,7 @@ class UserController {
       });
       return res
         .status(201)
-        .json({ message: 'Account created successfully', user });
+        .json({ message: 'Account created successfully', token, user });
     } catch (err) {
       res.status(400).json(err.message);
     }
