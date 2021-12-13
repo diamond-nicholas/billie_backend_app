@@ -159,7 +159,7 @@ class VendorController {
 
       const last_edited = moment().format();
       const vendor = await pool.query(
-        'UPDATE vendors SET bio=$1, last_edited= $2 WHERE vendorid=$3 returning *',
+        'UPDATE vendors SET bio=$1, last_edited= $2 WHERE id=$3 returning *',
         [bio, last_edited, parseInt(req.params.id)]
       );
       console.log(bio);

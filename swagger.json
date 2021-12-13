@@ -233,29 +233,6 @@
         }
       }
     },
-    "/vendors/bio": {
-      "patch": {
-        "tags": ["Vendor Authentication"],
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "summary": "Vendor bio creation",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "add biography",
-            "description": "Endpoint to add biography for vendor",
-            "schema": {
-              "$ref": "#/definitions/bio"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Biography Added Successfully"
-          }
-        }
-      }
-    },
     "/vendors/signin/": {
       "post": {
         "tags": ["Vendor Authentication"],

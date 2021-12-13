@@ -16,7 +16,7 @@ router.patch(
   VendorController.AddProfileImage
 );
 router.delete('/delete/:id', authenticateToken, VendorController.DeleteVendor);
-router.get('/get/:id', authenticateToken, VendorController.GetVendor);
+router.get('/get/:id', VendorController.GetVendor);
 router.get('/get/', VendorController.GetAllVendors);
 
 module.exports = router;
