@@ -16,6 +16,9 @@ class VendorController {
         return res.status(402).json({ message: 'User field cannot be empty' });
       const hashedPassword = bcrypt.hashSync(password, 10);
       const date_created = moment().format();
+      const token = jwt.sign({ email }, process.env.SECRET, {
+        expiresIn: '2d',
+      });
       const vendor = await VendorModel.CreateNewVendor({
         username: `vendor${nanoid(10)}`,
         businessname,
@@ -27,7 +30,7 @@ class VendorController {
       });
       return res
         .status(201)
-        .json({ message: 'Account created successfully', vendor });
+        .json({ message: 'Account created successfully', token, vendor });
     } catch (err) {
       res.status(400).json(err.message);
     }
@@ -86,13 +89,10 @@ class VendorController {
         'UPDATE vendors SET last_loggedin = $1 WHERE email = $2 RETURNING last_loggedin ',
         [currentTime, email]
       );
-      // const userid = await pool.query('SELECT * FROM users WHERE email=$1', [
-      //   email,
-      // ]);
-
+      // console.log(vendors.rows[0].vendorid);
       res.json({
         message: 'Vendor logged in successfully',
-        // userid: userid.rows[0].userid,
+        vendorid: vendors.rows[0].vendorid,
         token,
         lastLoggedIn: loggedInTime.rows[0],
       });
