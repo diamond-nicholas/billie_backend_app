@@ -86,13 +86,13 @@ class VendorController {
         'UPDATE vendors SET last_loggedin = $1 WHERE email = $2 RETURNING last_loggedin ',
         [currentTime, email]
       );
-      const userid = await pool.query('SELECT * FROM users WHERE email=$1', [
-        email,
-      ]);
+      // const userid = await pool.query('SELECT * FROM users WHERE email=$1', [
+      //   email,
+      // ]);
 
       res.json({
         message: 'Vendor logged in successfully',
-        userid: userid.rows[0].userid,
+        // userid: userid.rows[0].userid,
         token,
         lastLoggedIn: loggedInTime.rows[0],
       });
