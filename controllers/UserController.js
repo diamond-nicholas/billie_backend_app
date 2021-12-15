@@ -7,6 +7,8 @@ const moment = require('moment');
 // const hashPassword = require('../helpers/hashPassword');
 const UserModel = require('../db/users.db');
 const pool = require('../config/db');
+const OAuth2Client = require('google-auth-library');
+const client = new OAuth2Client('');
 
 class UserController {
   static async CreateUser(req, res) {
@@ -101,6 +103,14 @@ class UserController {
     } catch (err) {
       res.status(401).json(err.message);
     }
+  }
+
+  //login with google
+
+  static async googlelogin(req, res) {
+    try {
+      const { tokenID } = req.body;
+    } catch (error) {}
   }
 
   static async EditUser(req, res) {
