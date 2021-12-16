@@ -7,34 +7,47 @@ class CartController {
     try {
       const { productid, quantity } = req.body;
       const { userid } = req.params;
-      const productExists = await pool.query('SELECT * FROM cart WHERE productid = $1 AND userid = $2', [productid, userid]);
-      if (productExists.rows.length > 0) { res.status(400).json({ message: 'Product already exists in cart' }); } else {
+      const productExists = await pool.query(
+        'SELECT * FROM cart WHERE productid = $1 AND userid = $2',
+        [productid, userid]
+      );
+      if (productExists.rows.length > 0) {
+        res.status(400).json({ message: 'Product already exists in cart' });
+        return;
+      } else {
         const cart = await CartModel.AddToCart({ userid, productid, quantity });
         res.status(201).json({
           message: 'Successfully added to cart',
           cart: cart.rows[0],
         });
+        return;
       }
     } catch (err) {
       res.status(400).json({ message: err.message });
+      return;
     }
   }
 
-  static async IncreaseQuantity(req, res){
+  static async IncreaseQuantity(req, res) {
     try {
       const { productid } = req.body;
       const { userid } = req.params;
-      const updateCart = await CartModel.IncreaseQuantity({ userid, productid });
+      const updateCart = await CartModel.IncreaseQuantity({
+        userid,
+        productid,
+      });
       res.status(200).json({
         message: 'Quantity of product increased',
         cart: updateCart.rows[0],
       });
-    } catch (err){
+      return;
+    } catch (err) {
       res.status(400).json({ message: err.message });
+      return;
     }
   }
 
-  static async ReduceQuantity(req, res){
+  static async ReduceQuantity(req, res) {
     try {
       const { productid } = req.body;
       const { userid } = req.params;
@@ -43,22 +56,26 @@ class CartController {
         message: 'Quantity of product reduced',
         cart: updateCart.rows[0],
       });
-    } catch (err){
+      return;
+    } catch (err) {
       res.status(400).json({ message: err.message });
+      return;
     }
   }
 
-  static async GetCart(req, res){
+  static async GetCart(req, res) {
     try {
       const { userid } = req.params;
       const cart = await CartModel.GetCart({ userid });
       res.status(200).json({ cart: cart.rows });
+      return;
     } catch (err) {
       res.status(200).json(err.message);
+      return;
     }
   }
 
-  static async DeleteCartItem(req, res){
+  static async DeleteCartItem(req, res) {
     try {
       const { productid } = req.body;
       const { userid } = req.params;
@@ -67,20 +84,24 @@ class CartController {
         message: 'Deleted',
         deleteItem: deleteItem.rows[0],
       });
+      return;
     } catch (err) {
       res.status(400).json(err.message);
+      return;
     }
   }
 
-  static async ClearCart(req, res){
+  static async ClearCart(req, res) {
     try {
       const { userid } = req.params;
       const clearCart = await CartModel.ClearCart({ userid });
       res.status(200).json({
-        message: 'Cleared'
+        message: 'Cleared',
       });
-    } catch (err){
+      return;
+    } catch (err) {
       res.status(400).json(err.message);
+      return;
     }
   }
 }
