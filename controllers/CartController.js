@@ -12,19 +12,18 @@ class CartController {
         [productid, userid]
       );
       if (productExists.rows.length > 0) {
-        res.status(400).json({ message: 'Product already exists in cart' });
-        return;
+        return res
+          .status(400)
+          .json({ message: 'Product already exists in cart' });
       } else {
         const cart = await CartModel.AddToCart({ userid, productid, quantity });
-        res.status(201).json({
+        return res.status(201).json({
           message: 'Successfully added to cart',
           cart: cart.rows[0],
         });
-        return;
       }
     } catch (err) {
-      res.status(400).json({ message: err.message });
-      return;
+      return res.status(400).json({ message: err.message });
     }
   }
 
@@ -36,14 +35,12 @@ class CartController {
         userid,
         productid,
       });
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Quantity of product increased',
         cart: updateCart.rows[0],
       });
-      return;
     } catch (err) {
-      res.status(400).json({ message: err.message });
-      return;
+      return res.status(400).json({ message: err.message });
     }
   }
 
@@ -52,14 +49,12 @@ class CartController {
       const { productid } = req.body;
       const { userid } = req.params;
       const updateCart = await CartModel.ReduceQuantity({ userid, productid });
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Quantity of product reduced',
         cart: updateCart.rows[0],
       });
-      return;
     } catch (err) {
-      res.status(400).json({ message: err.message });
-      return;
+      return res.status(400).json({ message: err.message });
     }
   }
 
@@ -67,11 +62,9 @@ class CartController {
     try {
       const { userid } = req.params;
       const cart = await CartModel.GetCart({ userid });
-      res.status(200).json({ cart: cart.rows });
-      return;
+      return res.status(200).json({ cart: cart.rows });
     } catch (err) {
-      res.status(200).json(err.message);
-      return;
+      return res.status(200).json(err.message);
     }
   }
 
@@ -80,14 +73,12 @@ class CartController {
       const { productid } = req.body;
       const { userid } = req.params;
       const deleteItem = await CartModel.DeleteCartItem({ userid, productid });
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Deleted',
         deleteItem: deleteItem.rows[0],
       });
-      return;
     } catch (err) {
-      res.status(400).json(err.message);
-      return;
+      return res.status(400).json(err.message);
     }
   }
 
@@ -95,13 +86,11 @@ class CartController {
     try {
       const { userid } = req.params;
       const clearCart = await CartModel.ClearCart({ userid });
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Cleared',
       });
-      return;
     } catch (err) {
-      res.status(400).json(err.message);
-      return;
+      return res.status(400).json(err.message);
     }
   }
 }
