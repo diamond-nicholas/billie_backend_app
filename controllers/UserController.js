@@ -48,7 +48,7 @@ class UserController {
         parseInt(req.params.id),
       ]);
       if (users.rows.length === 0)
-        res.status(200).json({ message: 'No such user exists' });
+        return res.status(200).json({ message: 'No such user exists' });
       // if (users.rows.length >= 1)
       return res.status(200).json({
         message: 'User info retrieved successfully',

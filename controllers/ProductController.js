@@ -10,7 +10,7 @@ class ProductController {
       ]);
       const vendor = vendors.rows[0];
       if (vendor.length < 1)
-        res
+        return res
           .status(403)
           .json({ message: 'Only authorized vendors can post products' });
       else {
@@ -19,7 +19,7 @@ class ProductController {
       if (!req.body) res.status(400).json({ message: 'No input ' });
       const { product_title, price, description, status } = req.body;
       if ((!product_title || !price || !description, !status))
-        res.status(400).json({ message: 'No fields should be empty' });
+        return res.status(400).json({ message: 'No fields should be empty' });
 
       const { vendorid, businessname } = req.vendor;
       const displayimg = req.file.url;
@@ -37,14 +37,12 @@ class ProductController {
           date_created,
         ]
       );
-      res.status(201).json({
+      return res.status(201).json({
         message: 'Product successfully added',
         product: product.rows[0],
       });
-      return;
     } catch (err) {
-      res.status(400).json(err.message);
-      return;
+      return res.status(400).json(err.message);
     }
   }
 
@@ -56,23 +54,19 @@ class ProductController {
         [parseInt(productid)]
       );
       if (product.rows.length < 1)
-        res.status(200).json({ message: 'Product does not exist' });
-      res.status(200).json({ product: product.rows[0] });
-      return;
+        return res.status(200).json({ message: 'Product does not exist' });
+      return res.status(200).json({ product: product.rows[0] });
     } catch (err) {
-      res.status(403).json(err.message);
-      return;
+      return res.status(403).json(err.message);
     }
   }
 
   static async GetAll(req, res) {
     try {
       const product = await pool.query('SELECT * FROM products');
-      res.status(200).json({ product: product.rows });
-      return;
+      return res.status(200).json({ product: product.rows });
     } catch (err) {
-      res.status(403).json(err.message);
-      return;
+      return res.status(403).json(err.message);
     }
   }
 
@@ -84,7 +78,7 @@ class ProductController {
       ]);
       const vendor = vendors.rows[0];
       if (vendor.length < 1)
-        res
+        return res
           .status(403)
           .json({ message: 'Only authorized vendors can post products' });
       else {
@@ -97,7 +91,7 @@ class ProductController {
         [parseInt(productid)]
       );
       if (getId.rows[0].length < 1)
-        res.status(400).json({ message: 'No such product exists' });
+        return res.status(400).json({ message: 'No such product exists' });
 
       const { product_title, price, description, status } = req.body;
       const { vendorid, businessname } = req.vendor;
@@ -117,14 +111,12 @@ class ProductController {
           productid,
         ]
       );
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Edited product successfully',
         product: product.rows[0],
       });
-      return;
     } catch (err) {
-      res.status(400).json(er.message);
-      return;
+      return res.status(400).json(er.message);
     }
   }
 
@@ -136,7 +128,7 @@ class ProductController {
       ]);
       const vendor = vendors.rows[0];
       if (vendor.length < 1)
-        res
+        return res
           .status(403)
           .json({ message: 'Only authorized vendors can delete products' });
       else {
@@ -148,16 +140,14 @@ class ProductController {
         [parseInt(productid)]
       );
       if (deleteProduct.rows[0].length < 1)
-        res.status(400).json({ message: 'No such product exists' });
+        return res.status(400).json({ message: 'No such product exists' });
 
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Deleted product successfully',
         product: deleteProduct.rows[0],
       });
-      return;
     } catch (err) {
-      res.status(403).json(err.message);
-      return;
+      return res.status(403).json(err.message);
     }
   }
 
@@ -169,16 +159,14 @@ class ProductController {
         [parseInt(vendorid)]
       );
       if (vendorProduct.rows.length < 1)
-        res.status(400).json({ message: 'No such vendor exists' });
+        return res.status(400).json({ message: 'No such vendor exists' });
 
-      res.status(200).json({
+      return res.status(200).json({
         message: 'Vendor product retrieved successfully',
         product: vendorProduct.rows,
       });
-      return;
     } catch (err) {
-      res.status(403).json(err.message);
-      return;
+      return res.status(403).json(err.message);
     }
   }
 
