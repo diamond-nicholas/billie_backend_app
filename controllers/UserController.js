@@ -7,8 +7,10 @@ const moment = require('moment');
 // const hashPassword = require('../helpers/hashPassword');
 const UserModel = require('../db/users.db');
 const pool = require('../config/db');
-const OAuth2Client = require('google-auth-library');
-const client = new OAuth2Client('');
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(
+  '451133388441-v2mmc7srkhl0omf0itrun2ua90mffhnm.apps.googleusercontent.com'
+);
 
 class UserController {
   static async CreateUser(req, res) {
@@ -110,7 +112,19 @@ class UserController {
   static async googlelogin(req, res) {
     try {
       const { tokenID } = req.body;
-    } catch (error) {}
+      client
+        .verifyIdToken({
+          idToken: tokenID,
+          audience:
+            '451133388441-v2mmc7srkhl0omf0itrun2ua90mffhnm.apps.googleusercontent.com',
+        })
+        .then((response) => {
+          const { email, name, email_verified } = response.payload;
+        });
+      console.log(response.payload);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   static async EditUser(req, res) {

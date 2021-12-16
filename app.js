@@ -13,11 +13,15 @@ const app = express();
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5002;
 
 app.use(express.json());
 app.use(cors());
 
+app.set('view engine', 'ejs');
+app.get('/login', (req, res) => {
+  res.render('login');
+});
 app.use('/api/v2/users', userRouter);
 app.use('/api/v2/vendors', vendorRouter);
 app.use('/api/v2/products', productRouter);
