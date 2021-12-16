@@ -32,7 +32,7 @@ class VendorController {
         .status(201)
         .json({ message: 'Account created successfully', token, vendor });
     } catch (err) {
-      res.status(400).json(err.message);
+      return res.status(400).json(err.message);
     }
   }
 
@@ -43,13 +43,13 @@ class VendorController {
         [parseInt(req.params.id)]
       );
       if (vendors.rows.length === 0)
-        res.status(200).json({ message: 'No such vendor exists' });
-      res.status(200).json({
+        return res.status(200).json({ message: 'No such vendor exists' });
+      return res.status(200).json({
         message: 'Vendor info retrieved successfully',
         vendor: vendors.rows[0],
       });
     } catch (err) {
-      res.status(400).json(err);
+      return res.status(400).json(err);
     }
   }
 
@@ -57,13 +57,13 @@ class VendorController {
     try {
       const vendors = await pool.query('SELECT * FROM vendors');
       if (vendors.rows.length === 0)
-        res.status(200).json({ message: 'No such vendors exists' });
-      res.status(200).json({
+        return res.status(200).json({ message: 'No such vendors exists' });
+      return res.status(200).json({
         message: 'Vendors retrieved successfully',
         vendor: vendors.rows,
       });
     } catch (err) {
-      res.status(400).json(err);
+      return res.status(400).json(err);
     }
   }
 
@@ -90,14 +90,14 @@ class VendorController {
         [currentTime, email]
       );
       // console.log(vendors.rows[0].vendorid);
-      res.json({
+      return res.json({
         message: 'Vendor logged in successfully',
         vendorid: vendors.rows[0].vendorid,
         token,
         lastLoggedIn: loggedInTime.rows[0],
       });
     } catch (err) {
-      res.status(401).json(err.message);
+      return res.status(401).json(err.message);
     }
   }
 
@@ -168,7 +168,7 @@ class VendorController {
         data: vendor.rows,
       });
     } catch (err) {
-      res.status(400).json(err.message);
+      return res.status(400).json(err.message);
     }
   }
 

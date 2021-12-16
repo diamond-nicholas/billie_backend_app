@@ -21,4 +21,6 @@ router.delete('/delete/:id', authenticateToken, UserController.DeleteUser);
 router.get('/get/:id', authenticateToken, UserController.GetUser);
 router.get('/get/', UserController.GetAllUsers);
 
+router.post('/googlelogin', UserController.googlelogin);
+
 module.exports = router;
