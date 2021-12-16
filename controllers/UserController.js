@@ -38,7 +38,7 @@ class UserController {
         .status(201)
         .json({ message: 'Account created successfully', token, user });
     } catch (err) {
-      res.status(400).json(err.message);
+      return res.status(400).json(err.message);
     }
   }
 
@@ -49,12 +49,13 @@ class UserController {
       ]);
       if (users.rows.length === 0)
         res.status(200).json({ message: 'No such user exists' });
-      res.status(200).json({
+      // if (users.rows.length >= 1)
+      return res.status(200).json({
         message: 'User info retrieved successfully',
         user: users.rows[0],
       });
     } catch (err) {
-      res.status(400).json(err.message);
+      return res.status(400).json(err.message);
     }
   }
 
@@ -62,12 +63,12 @@ class UserController {
     try {
       const users = await pool.query('SELECT * FROM users');
       // if (users.rows.length === 0)res.status(200).json({ message: 'No users exist' });
-      res.status(200).json({
+      return res.status(200).json({
         message: 'All users retrieved successfully',
         users: users.rows,
       });
     } catch (err) {
-      res.status(400).json(err.message);
+      return res.status(400).json(err.message);
     }
   }
 
@@ -97,14 +98,14 @@ class UserController {
         [currentTime, email]
       );
 
-      res.json({
+      return res.json({
         message: 'User logged in successfully',
         userid: userid.rows[0].userid,
         token,
         lastLoggedIn: loggedInTime.rows[0],
       });
     } catch (err) {
-      res.status(401).json(err.message);
+      return res.status(401).json(err.message);
     }
   }
 
@@ -132,8 +133,10 @@ class UserController {
         })
         .catch(console.error);
       // });
+      return;
     } catch (error) {
       console.log(error);
+      return;
     }
   }
 
