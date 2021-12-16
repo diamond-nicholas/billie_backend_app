@@ -41,8 +41,10 @@ class ProductController {
         message: 'Product successfully added',
         product: product.rows[0],
       });
+      return;
     } catch (err) {
       res.status(400).json(err.message);
+      return;
     }
   }
 
@@ -56,8 +58,10 @@ class ProductController {
       if (product.rows.length < 1)
         res.status(200).json({ message: 'Product does not exist' });
       res.status(200).json({ product: product.rows[0] });
+      return;
     } catch (err) {
       res.status(403).json(err.message);
+      return;
     }
   }
 
@@ -65,8 +69,10 @@ class ProductController {
     try {
       const product = await pool.query('SELECT * FROM products');
       res.status(200).json({ product: product.rows });
+      return;
     } catch (err) {
       res.status(403).json(err.message);
+      return;
     }
   }
 
@@ -115,8 +121,10 @@ class ProductController {
         message: 'Edited product successfully',
         product: product.rows[0],
       });
+      return;
     } catch (err) {
       res.status(400).json(er.message);
+      return;
     }
   }
 
@@ -146,8 +154,10 @@ class ProductController {
         message: 'Deleted product successfully',
         product: deleteProduct.rows[0],
       });
+      return;
     } catch (err) {
       res.status(403).json(err.message);
+      return;
     }
   }
 
@@ -165,8 +175,10 @@ class ProductController {
         message: 'Vendor product retrieved successfully',
         product: vendorProduct.rows,
       });
+      return;
     } catch (err) {
       res.status(403).json(err.message);
+      return;
     }
   }
 
