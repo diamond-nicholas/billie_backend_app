@@ -8,16 +8,17 @@ const vendorRouter = require('./routes/vendorRoutes');
 const productRouter = require('./routes/productRoutes');
 const cartRouter = require('./routes/cartRoutes');
 const swaggerDocs = require('./swagger.json');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5003;
 
 app.use(express.json());
 app.use(cors());
-
+app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.get('/login', (req, res) => {
   res.render('login');

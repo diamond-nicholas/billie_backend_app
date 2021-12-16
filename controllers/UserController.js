@@ -7,10 +7,11 @@ const moment = require('moment');
 // const hashPassword = require('../helpers/hashPassword');
 const UserModel = require('../db/users.db');
 const pool = require('../config/db');
+//google auth
 const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client(
-  '451133388441-v2mmc7srkhl0omf0itrun2ua90mffhnm.apps.googleusercontent.com'
-);
+const CLIENT_ID =
+  '451133388441-fqg0bgrmhkppj30s9881lbj86pn2ncac.apps.googleusercontent.com';
+const client = new OAuth2Client(CLIENT_ID);
 
 class UserController {
   static async CreateUser(req, res) {
@@ -111,17 +112,26 @@ class UserController {
 
   static async googlelogin(req, res) {
     try {
-      const { tokenID } = req.body;
-      client
-        .verifyIdToken({
-          idToken: tokenID,
-          audience:
-            '451133388441-v2mmc7srkhl0omf0itrun2ua90mffhnm.apps.googleusercontent.com',
-        })
-        .then((response) => {
-          const { email, name, email_verified } = response.payload;
+      let token = req.body.token;
+      // console.log(token);
+      async function verify() {
+        const ticket = await client.verifyIdToken({
+          idToken: token,
+          audience: CLIENT_ID,
         });
-      console.log(response.payload);
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+        // If request specified a G Suite domain:
+        // const domain = payload['hd'];
+        console.log(payload);
+      }
+      verify()
+        .then(() => {
+          res.cookie('session-token', token);
+          res.send('success');
+        })
+        .catch(console.error);
+      // });
     } catch (error) {
       console.log(error);
     }
