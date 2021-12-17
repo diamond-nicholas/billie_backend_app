@@ -7,6 +7,7 @@ const userRouter = require('./routes/userRoutes');
 const vendorRouter = require('./routes/vendorRoutes');
 const productRouter = require('./routes/productRoutes');
 const cartRouter = require('./routes/cartRoutes');
+const orderRouter = require('./routes/orderRoutes');
 const swaggerDocs = require('./swagger.json');
 const cookieParser = require('cookie-parser');
 
@@ -27,6 +28,7 @@ app.use('/api/v2/users', userRouter);
 app.use('/api/v2/vendors', vendorRouter);
 app.use('/api/v2/products', productRouter);
 app.use('/api/v2/cart', cartRouter);
+app.use('/api/v2/orders', orderRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
