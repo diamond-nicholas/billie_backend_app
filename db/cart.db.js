@@ -5,11 +5,13 @@ class CartModel {
     userid, productid, quantity,
   }) {
     const price = await pool.query('SELECT price FROM products WHERE productid = $1', [productid]);
-    const subtotal = price.rows[0].price * quantity;
+    let itemPrice = price.rows[0].price;
+    const subtotal = itemPrice * quantity;
     const cart = await pool.query('INSERT INTO cart(userid, productid, quantity, subtotal) VALUES($1,$2,$3,$4)',
       [userid, productid, quantity, subtotal]);
+    const updateCart = await pool.query('UPDATE cart SET price = products.price FROM products WHERE cart.productid = products.productid');
     const cartItem = await pool.query(
-      'SELECT cart.userid, cart.productid, products.product_title, products.displayimg, products.price, cart.quantity, cart.subtotal FROM cart AS cart LEFT JOIN products AS products ON cart.productid = products.productid WHERE cart.productid = $1 AND cart.userid = $2;',
+      'SELECT cart.userid, cart.productid, products.product_title, products.displayimg, cart.price, cart.quantity, cart.subtotal FROM cart AS cart LEFT JOIN products AS products ON cart.productid = products.productid WHERE cart.productid = $1 AND cart.userid = $2;',
       [productid, userid],
     );
     return cartItem;

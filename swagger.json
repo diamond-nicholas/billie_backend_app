@@ -1339,6 +1339,10 @@
           "type": "string",
           "enum": ["prepaid","on_delivery"]
         },
+        "order_status": {
+          "type": "string",
+          "enum": ["pending", "confirmed", "delivered", "cancelled"]
+        },
         "ordersItems": {
           "properties": {
             "orderid": {
