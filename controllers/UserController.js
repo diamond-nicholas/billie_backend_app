@@ -24,7 +24,7 @@ class UserController {
       const hashedPassword = bcrypt.hashSync(password, 10);
       const date_created = moment().format();
       const token = jwt.sign({ email }, process.env.SECRET, {
-        expiresIn: '2d',
+        expiresIn: '14d',
       });
       console.log(req.body);
       const user = await UserModel.CreateNewUser({
@@ -90,7 +90,7 @@ class UserController {
         email,
       ]);
       const token = jwt.sign({ email }, process.env.SECRET, {
-        expiresIn: '2d',
+        expiresIn: '14d',
       });
       const currentTime = moment().format();
       const loggedInTime = await pool.query(
@@ -111,9 +111,9 @@ class UserController {
 
   //login with google
 
-  static async googlelogin(req, res) {
+  static async GoogleLogin(req, res) {
     try {
-      let token = req.body.token;
+      let {token} = req.body;
       // console.log(token);
       async function verify() {
         const ticket = await client.verifyIdToken({
