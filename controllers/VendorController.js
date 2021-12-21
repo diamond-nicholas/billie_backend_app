@@ -54,8 +54,44 @@ class VendorController {
   }
   static async GetCategories(req, res) {
     try {
+      const categories = await pool.query(
+        'SELECT type.typname, enum.enumlabel AS value FROM pg_enum AS enum JOIN pg_type AS type ON (type.oid = enum.enumtypid) GROUP BY enum.enumlabel, type.typname'
+      );
+      const getAllVendors = await pool.query('SELECT * FROM vendors');
+      // console.log(getAllVendors.rows);
+      const getVendorType = getAllVendors.rows;
+      getVendorType.forEach((vendor) => {
+        const type = vendor.vendortype;
+
+        // console.log(type);
+      });
+      const sample = categories.rows;
+      // console.log(sample);
+
+      for (let i = 0; i < sample.length; i++) {
+        // console.log(sample[i].typname);
+        const test = sample[i];
+        // console.log(test);
+        if (test.typname == 'vendortype') {
+          // console.log(test);
+          // console.log(test);
+          // const health_category = test.value;
+          // return res.status(201).json({
+          //   test,
+          // });
+        } else if (test.typname == 'order_status') {
+          // console.log(test);
+        }
+      }
+      // for (i = 0; i < sample.length; i++) {
+      //   const test = sample;
+      //   console.log(test);
+      //   // if (sample.typname == 'vendortype') {
+      //   //   console.log(sample);
+      //   // }
+      // }
     } catch (error) {
-      return res.status(400).json(err);
+      return res.status(400).json(error);
     }
   }
 
