@@ -18,5 +18,6 @@ router.patch(
 router.delete('/delete/:id', authenticateToken, VendorController.DeleteVendor);
 router.get('/get/:id', VendorController.GetVendor);
 router.get('/get/', VendorController.GetAllVendors);
+router.get('/category', VendorController.GetCategories);
 
 module.exports = router;
