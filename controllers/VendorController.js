@@ -52,6 +52,12 @@ class VendorController {
       return res.status(400).json(err);
     }
   }
+  static async GetCategories(req, res) {
+    try {
+    } catch (error) {
+      return res.status(400).json(err);
+    }
+  }
 
   static async GetAllVendors(req, res) {
     try {
