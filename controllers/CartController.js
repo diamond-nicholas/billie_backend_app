@@ -15,7 +15,8 @@ class CartController {
         return res
           .status(400)
           .json({ message: 'Product already exists in cart' });
-      } else {
+      }else if(quantity < 1) return res.status(400).json({ message: 'Quantity must be greater than 0' });
+       else {
         const cart = await CartModel.AddToCart({ userid, productid, quantity });
         return res.status(201).json({
           message: 'Successfully added to cart',
@@ -49,6 +50,10 @@ class CartController {
       const { productid } = req.body;
       const { userid } = req.params;
       const updateCart = await CartModel.ReduceQuantity({ userid, productid });
+      if (quantity === 0){
+        const {rows:deleteItem} = await CartModel.DeleteCartItem({ userid, productid });
+        return res.status(200).json({message:'Item deleted from cart', cart:deleteItem[0]});
+      }
       return res.status(200).json({
         message: 'Quantity of product reduced',
         cart: updateCart.rows[0],

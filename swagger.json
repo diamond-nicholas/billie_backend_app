@@ -1019,6 +1019,106 @@
           }
         }
       }
+    },
+    "/orders/modify/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user to add to orders",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "address",
+          "description": "Address to be delivered to",
+          "schema": {
+            "$ref": "#/definitions/orders/properties/address"
+          }
+        },
+        {
+          "in": "body",
+          "name": "payment_method",
+          "description": "How product will be paid",
+          "schema": {
+            "$ref": "#/definitions/orders/properties/payment_method"
+          }
+        },
+        {
+          "in": "body",
+          "name": "phone_number",
+          "description": "Phone number of order recepient",
+          "schema": {
+            "$ref": "#/definitions/orders/properties/phone_number"
+          }
+        },
+        {
+          "in": "body",
+          "name": "orderid",
+          "description": "Orderid of order to change",
+          "schema": {
+            "$ref": "#/definitions/orders/properties/orderid"
+          }
+        }
+      ],
+      "patch": {
+        "tags": ["Orders CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Add to cart",
+        "responses": {
+          "201": {
+            "description": "Order modified",
+            "schema": {
+              "$ref": "#/definitions/orders"
+            }
+          }
+        }
+      }
+    },
+    "/orders/cancel/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user to add to orders",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "orderid",
+          "description": "Orderid of order to cancel",
+          "schema": {
+            "$ref": "#/definitions/orders/properties/orderid"
+          }
+        }
+      ],
+      "patch": {
+        "tags": ["Orders CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Add to cart",
+        "responses": {
+          "201": {
+            "description": "Order cancelled",
+            "schema": {
+              "$ref": "#/definitions/orders"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

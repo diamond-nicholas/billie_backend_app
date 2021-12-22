@@ -42,6 +42,9 @@ class OrderController {
     try {
       const { userid } = req.params;
       const { address, orderid, payment_method, phone_number } = req.body;
+      const {rows:orderStatus} = await pool.query('SELECT order_status FROM orders WHERE orderid=$1 AND userid=$2',
+      [orderid, userid]);
+      if (orderStatus !== 'pending') return res.status(400).json({message: 'This order cannot be edited'});
       const {rows:modifiedOrders} = await pool.query('UPDATE orders SET address=$1, payment_method=$2, phone_number=$3 WHERE orderid=$4 AND userid=$5 RETURNING *',
         [address, payment_method, phone_number, orderid, userid]);
         const { rows: orderItems } = await pool.query(
@@ -49,6 +52,25 @@ class OrderController {
           [orderid]);
       res.status(200).json({message:'Updated successfully',modifiedOrders,orderItems});
     }catch (err) {
+      res.status(400).json(err.message);
+    }
+  }
+
+  static async CancelOrder(req,res){
+    try{
+      const { userid } = req.params;
+      const {orderid} = req.body;
+      const {rows:getOrder} = await pool.query('SELECT order_status FROM orders WHERE orderid=$1',[orderid]);
+      if(getOrder === 'confirmed' || getOrder === 'delivered')return res.status(400).json({message:'You cannot cancel this order'})
+      else if (getOrder === 'cancelled') return res.status(400).json({message:'This order has already been cancelled'})
+      const order_status = 'cancelled';
+      const {rows:cancelOrder} = await pool.query('UPDATE orders SET order_status = $1 WHERE orderid = $2 RETURNING *',
+      [order_status, orderid]);
+      const { rows: orderItems } = await pool.query(
+        'SELECT orderitems.orderid, orderitems.productid, orderitems.vendorid, products.product_title, products.businessname, products.displayimg, orderitems.price, orderitems.quantity, orderitems.subtotal FROM orderitems AS orderitems LEFT JOIN products AS products ON orderitems.productid = products.productid WHERE orderitems.orderid = $1;',
+        [orderid]);
+      res.status(200).json({message:'Order cancelled',cancelOrder, orderItems});
+    }catch(err){
       res.status(400).json(err.message);
     }
   }
