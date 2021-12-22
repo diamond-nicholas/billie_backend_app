@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const VendorModel = require('../db/vendor.db');
 const pool = require('../config/db');
+const { types } = require('pg');
 
 class VendorController {
   static async CreateVendor(req, res) {
@@ -58,38 +59,27 @@ class VendorController {
         'SELECT type.typname, enum.enumlabel AS value FROM pg_enum AS enum JOIN pg_type AS type ON (type.oid = enum.enumtypid) GROUP BY enum.enumlabel, type.typname'
       );
       const getAllVendors = await pool.query('SELECT * FROM vendors');
-      // console.log(getAllVendors.rows);
+      const getVendorCategories = categories.rows;
+      // console.log(getVendorCategories);
       const getVendorType = getAllVendors.rows;
       getVendorType.forEach((vendor) => {
         const type = vendor.vendortype;
-
-        // console.log(type);
-      });
-      const sample = categories.rows;
-      // console.log(sample);
-
-      for (let i = 0; i < sample.length; i++) {
-        // console.log(sample[i].typname);
-        const test = sample[i];
-        // console.log(test);
-        if (test.typname == 'vendortype') {
-          // console.log(test);
-          // console.log(test);
-          // const health_category = test.value;
-          // return res.status(201).json({
-          //   test,
-          // });
-        } else if (test.typname == 'order_status') {
-          // console.log(test);
+        // console.log(vendor);
+        if (type == 'health') {
+          getVendorCategories.forEach((category) => {
+            if (category.typname == 'health_category') {
+              console.log(category);
+            }
+            // return console.log(category);
+          });
+        } else if (type == 'food') {
+          getVendorCategories.map((category) => {
+            if (category.typname == 'food_category') {
+              console.log(category);
+            }
+          });
         }
-      }
-      // for (i = 0; i < sample.length; i++) {
-      //   const test = sample;
-      //   console.log(test);
-      //   // if (sample.typname == 'vendortype') {
-      //   //   console.log(sample);
-      //   // }
-      // }
+      });
     } catch (error) {
       return res.status(400).json(error);
     }
