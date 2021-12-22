@@ -78,6 +78,18 @@ class VendorController {
               console.log(category);
             }
           });
+        } else if (type == 'beauty') {
+          getVendorCategories.map((category) => {
+            if (category.typname == 'beauty_category') {
+              console.log(category);
+            }
+          });
+        } else if (type == 'drinks') {
+          getVendorCategories.map((category) => {
+            if (category.typname == 'drinks_category') {
+              console.log(category);
+            }
+          });
         }
       });
     } catch (error) {
