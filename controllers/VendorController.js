@@ -71,7 +71,7 @@ class VendorController {
             if (category.typname == 'health_category') {
               // console.log(category);
               const health = category.value;
-              console.log(health);
+              // console.log(health);
               return res.status(201).json({
                 message: 'Health category fetched successfully',
                 health,
