@@ -101,9 +101,10 @@ class VendorController {
         } else if (type == 'drinks') {
           getVendorCategories.map((category) => {
             if (category.typname == 'drinks_category') {
+              const drinks = category.value;
               return res.status(201).json({
-                message: 'Drinks category fetched succecfully',
-                category,
+                message: 'Drinks category fetched successfully',
+                drinks,
               });
             }
           });
