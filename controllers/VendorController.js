@@ -71,26 +71,39 @@ class VendorController {
         if (type == 'health') {
           getVendorCategories.forEach((category) => {
             if (category.typname == 'health_category') {
-              console.log(category);
+              return res.status(201).json({
+                message: 'Health category fetched succecfully',
+                category,
+              });
+              // console.log(category);
             }
             // return console.log(category);
           });
         } else if (type == 'food') {
           getVendorCategories.map((category) => {
             if (category.typname == 'food_category') {
-              console.log(category);
+              return res.status(201).json({
+                message: 'Food category fetched succecfully',
+                category,
+              });
             }
           });
         } else if (type == 'beauty') {
           getVendorCategories.map((category) => {
             if (category.typname == 'beauty_category') {
-              console.log(category);
+              return res.status(201).json({
+                message: 'Beauty category fetched succecfully',
+                category,
+              });
             }
           });
         } else if (type == 'drinks') {
           getVendorCategories.map((category) => {
             if (category.typname == 'drinks_category') {
-              console.log(category);
+              return res.status(201).json({
+                message: 'Drinks category fetched succecfully',
+                category,
+              });
             }
           });
         }
@@ -99,8 +112,6 @@ class VendorController {
       return res.status(400).json(error);
     }
   }
-
-  // patch request for geting categories
 
   static async GetAllVendors(req, res) {
     try {
