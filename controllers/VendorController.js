@@ -58,7 +58,10 @@ class VendorController {
       const categories = await pool.query(
         'SELECT type.typname, enum.enumlabel AS value FROM pg_enum AS enum JOIN pg_type AS type ON (type.oid = enum.enumtypid) GROUP BY enum.enumlabel, type.typname'
       );
-      const getAllVendors = await pool.query('SELECT * FROM vendors');
+      const getAllVendors = await pool.query(
+        'SELECT * FROM vendors WHERE vendorid=$1',
+        [parseInt(req.params.id)]
+      );
       const getVendorCategories = categories.rows;
       // console.log(getVendorCategories);
       const getVendorType = getAllVendors.rows;
@@ -96,6 +99,8 @@ class VendorController {
       return res.status(400).json(error);
     }
   }
+
+  // patch request for geting categories
 
   static async GetAllVendors(req, res) {
     try {
