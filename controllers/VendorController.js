@@ -63,27 +63,26 @@ class VendorController {
         [parseInt(req.params.id)]
       );
       const getVendorCategories = categories.rows;
-      // console.log(getVendorCategories);
       const getVendorType = getAllVendors.rows;
       getVendorType.forEach((vendor) => {
         const type = vendor.vendortype;
-        // console.log(vendor);
         if (type == 'health') {
-          getVendorCategories.forEach((category) => {
+          getVendorCategories.map((category) => {
             if (category.typname == 'health_category') {
-              return res.status(201).json({
-                message: 'Health category fetched succecfully',
-                category,
-              });
               // console.log(category);
+              const health = category.value;
+              console.log(health);
+              return res.status(201).json({
+                message: 'Health category fetched successfully',
+                health,
+              });
             }
-            // return console.log(category);
           });
         } else if (type == 'food') {
           getVendorCategories.map((category) => {
             if (category.typname == 'food_category') {
               return res.status(201).json({
-                message: 'Food category fetched succecfully',
+                message: 'Food category fetched successfully',
                 category,
               });
             }
