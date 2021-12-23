@@ -81,18 +81,20 @@ class VendorController {
         } else if (type == 'food') {
           getVendorCategories.map((category) => {
             if (category.typname == 'food_category') {
+              const food = category.value;
               return res.status(201).json({
                 message: 'Food category fetched successfully',
-                category,
+                food,
               });
             }
           });
         } else if (type == 'beauty') {
           getVendorCategories.map((category) => {
             if (category.typname == 'beauty_category') {
+              const beauty = category.value;
               return res.status(201).json({
-                message: 'Beauty category fetched succecfully',
-                category,
+                message: 'Beauty category fetched successfully',
+                beauty,
               });
             }
           });
