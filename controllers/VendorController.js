@@ -73,21 +73,23 @@ class VendorController {
               .filter((category) => category.typname == 'health_category')
               .map((category) => category.value);
           }
-          console.log(getHealthCat(getVendorCategories));
+          // console.log(getHealthCat(getVendorCategories));
           const health = getHealthCat(getVendorCategories);
           return res.status(201).json({
             message: 'Health category fetched successfully',
             health,
           });
         } else if (type == 'food') {
-          getVendorCategories.map((category) => {
-            if (category.typname == 'food_category') {
-              const food = category.value;
-              return res.status(201).json({
-                message: 'Food category fetched successfully',
-                food,
-              });
-            }
+          function getFoodCat(categories) {
+            return categories
+              .filter((category) => category.typname == 'food_category')
+              .map((category) => category.value);
+          }
+          // console.log(getFoodCat(getVendorCategories));
+          const food = getFoodCat(getVendorCategories);
+          return res.status(201).json({
+            message: 'Food category fetched successfully',
+            food,
           });
         } else if (type == 'beauty') {
           getVendorCategories.map((category) => {
