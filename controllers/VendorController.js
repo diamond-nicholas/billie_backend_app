@@ -92,14 +92,16 @@ class VendorController {
             food,
           });
         } else if (type == 'beauty') {
-          getVendorCategories.map((category) => {
-            if (category.typname == 'beauty_category') {
-              const beauty = category.value;
-              return res.status(201).json({
-                message: 'Beauty category fetched successfully',
-                beauty,
-              });
-            }
+          function getBeautyCat(categories) {
+            return categories
+              .filter((category) => category.typname == 'beauty_category')
+              .map((category) => category.value);
+          }
+          // console.log(getBeautyCat(getVendorCategories));
+          const beauty = getBeautyCat(getVendorCategories);
+          return res.status(201).json({
+            message: 'Food category fetched successfully',
+            beauty,
           });
         } else if (type == 'drinks') {
           getVendorCategories.map((category) => {
