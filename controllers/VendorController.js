@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const VendorModel = require('../db/vendor.db');
 const pool = require('../config/db');
+const { types } = require('pg');
 
 class VendorController {
   static async CreateVendor(req, res) {
@@ -50,6 +51,74 @@ class VendorController {
       });
     } catch (err) {
       return res.status(400).json(err);
+    }
+  }
+  static async GetCategories(req, res) {
+    try {
+      const categories = await pool.query(
+        'SELECT type.typname, enum.enumlabel AS value FROM pg_enum AS enum JOIN pg_type AS type ON (type.oid = enum.enumtypid) GROUP BY enum.enumlabel, type.typname'
+      );
+      const getAllVendors = await pool.query(
+        'SELECT * FROM vendors WHERE vendorid=$1',
+        [parseInt(req.params.id)]
+      );
+      const getVendorCategories = categories.rows;
+      // console.log(getVendorCategories);
+      const getVendorType = getAllVendors.rows;
+      getVendorType.forEach((vendor) => {
+        const type = vendor.vendortype;
+        if (type == 'health') {
+          function getHealthCat(categories) {
+            return categories
+              .filter((category) => category.typname == 'health_category')
+              .map((category) => category.value);
+          }
+          // console.log(getHealthCat(getVendorCategories));
+          const health = getHealthCat(getVendorCategories);
+          return res.status(201).json({
+            message: 'Health category fetched successfully',
+            health,
+          });
+        } else if (type == 'food') {
+          function getFoodCat(categories) {
+            return categories
+              .filter((category) => category.typname == 'food_category')
+              .map((category) => category.value);
+          }
+          // console.log(getFoodCat(getVendorCategories));
+          const food = getFoodCat(getVendorCategories);
+          return res.status(201).json({
+            message: 'Food category fetched successfully',
+            food,
+          });
+        } else if (type == 'beauty') {
+          function getBeautyCat(categories) {
+            return categories
+              .filter((category) => category.typname == 'beauty_category')
+              .map((category) => category.value);
+          }
+          // console.log(getBeautyCat(getVendorCategories));
+          const beauty = getBeautyCat(getVendorCategories);
+          return res.status(201).json({
+            message: 'Food category fetched successfully',
+            beauty,
+          });
+        } else if (type == 'drinks') {
+          function getDrinksCat(categories) {
+            return categories
+              .filter((category) => category.typname == 'drinks_category')
+              .map((category) => category.value);
+          }
+          // console.log(getDrinksCat(getVendorCategories));
+          const drinks = getDrinksCat(getVendorCategories);
+          return res.status(201).json({
+            message: 'Food category fetched successfully',
+            drinks,
+          });
+        }
+      });
+    } catch (error) {
+      return res.status(400).json(error);
     }
   }
 

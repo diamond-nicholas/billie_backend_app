@@ -113,8 +113,23 @@ class UserController {
 
   static async GoogleLogin(req, res) {
     try {
-      let {token} = req.body;
+      let token = req.body.token;
+      const email = req.body;
+      const users = await pool.query('SELECT * FROM users WHERE email=$1', [
+        email,
+      ]);
+      // const user = users.rows[0];
+      // if (user.length === 0) {
+      //   return res.status(401).json({ message: 'Invalid username or email' });
+      // }
+      const currentTime = moment().format();
+      const loggedInTime = await pool.query(
+        'UPDATE users SET last_loggedin = $1 WHERE email = $2 RETURNING last_loggedin ',
+        [currentTime, email]
+      );
+
       // console.log(token);
+      console.log(email, users);
       async function verify() {
         const ticket = await client.verifyIdToken({
           idToken: token,
@@ -125,6 +140,7 @@ class UserController {
         // If request specified a G Suite domain:
         // const domain = payload['hd'];
         console.log(payload);
+        console.log(userid);
       }
       verify()
         .then(() => {
@@ -132,11 +148,18 @@ class UserController {
           res.send('success');
         })
         .catch(console.error);
+
+      return res.status(200).json({
+        message: 'User logged in succesfully',
+        userid: userid,
+        token,
+        payload: payload,
+        lastLoggedIn: loggedInTime.rows[0],
+      });
       // });
       return;
     } catch (error) {
-      console.log(error);
-      return;
+      // return res.status(401).json(error.message);
     }
   }
 
