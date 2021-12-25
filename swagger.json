@@ -427,6 +427,39 @@
         }
       }
     },
+    "/vendors/bio/{vendorId}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor that we want to add biography",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "bioid",
+          "description": "Biography to Update"
+        }
+      ],
+      "patch": {
+        "tags": ["Vendor Authentication"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Update user biography with given ID",
+        "responses": {
+          "200": {
+            "description": "Vendor updated successfully",
+            "schema": {
+              "$ref": "#/definitions/vendor/"
+            }
+          }
+        }
+      }
+    },
     "/products/create-products/": {
       "post": {
         "tags": ["Product CRUD"],

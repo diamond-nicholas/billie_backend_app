@@ -158,10 +158,13 @@ class VendorController {
         'UPDATE vendors SET last_loggedin = $1 WHERE email = $2 RETURNING last_loggedin ',
         [currentTime, email]
       );
+      const businessname = vendors.rows[0].businessname;
+      // console.log(businessname);
       // console.log(vendors.rows[0].vendorid);
       return res.json({
         message: 'Vendor logged in successfully',
         vendorid: vendors.rows[0].vendorid,
+        businessname: businessname,
         token,
         lastLoggedIn: loggedInTime.rows[0],
       });
@@ -175,17 +178,19 @@ class VendorController {
       const { businessname, vendortype, address, email, password } = req.body;
       const last_edited = moment().format();
       const hashedPassword = bcrypt.hashSync(password, 10);
-      
+
       const result = await pool.query(
         'UPDATE vendors SET businessname=$1, vendortype=$2, address=$3, email=$4, password=$5, last_edited=$6 WHERE vendorid=$7 RETURNING *',
         // eslint-disable-next-line radix
-        [businessname,
+        [
+          businessname,
           vendortype,
           address,
           email,
           password,
           last_edited,
-          parseInt(req.params.id)]
+          parseInt(req.params.id),
+        ]
       );
       return res.status(200).json({
         message: 'Vendor updated successfully',
@@ -200,13 +205,13 @@ class VendorController {
     try {
       const last_edited = moment().format();
       const profile_image = req.file.url;
-      const {rows:profileImage} = await pool.query(
+      const { rows: profileImage } = await pool.query(
         'UPDATE vendors SET profile_image=$1,last_edited=$2 WHERE vendorid=$3 RETURNING *',
         [profile_image, last_edited, parseInt(req.params.id)]
       );
       return res.status(201).json({
         message: 'Profile image updated',
-        data: profileImage
+        data: profileImage,
       });
     } catch (error) {
       return res.status(500).json(error.message);
@@ -226,7 +231,7 @@ class VendorController {
 
       const last_edited = moment().format();
       const vendor = await pool.query(
-        'UPDATE vendors SET bio=$1, last_edited= $2 WHERE id=$3 returning *',
+        'UPDATE vendors SET bio=$1, last_edited= $2 WHERE vendorid=$3 returning *',
         [bio, last_edited, parseInt(req.params.id)]
       );
       console.log(bio);
