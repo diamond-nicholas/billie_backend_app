@@ -159,11 +159,14 @@ class VendorController {
         [currentTime, email]
       );
       const businessname = vendors.rows[0].businessname;
+      const vendoremail = vendors.rows[0].email;
+
       // console.log(businessname);
       // console.log(vendors.rows[0].vendorid);
       return res.json({
         message: 'Vendor logged in successfully',
         vendorid: vendors.rows[0].vendorid,
+        email: vendoremail,
         businessname: businessname,
         token,
         lastLoggedIn: loggedInTime.rows[0],
