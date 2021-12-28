@@ -14,7 +14,7 @@ router.post(
   ProductController.Create
 );
 router.get('/get/:id', authenticateToken, ProductController.GetOne);
-router.get('/get/', authenticateToken, ProductController.GetAll);
+router.get('/get/', ProductController.GetAll);
 router.route('/sample').get(ProductController.GetAll);
 
 router.patch(
