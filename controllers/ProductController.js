@@ -20,7 +20,6 @@ class ProductController {
       const { product_title, price, description, status } = req.body;
       if ((!product_title || !price || !description, !status))
         return res.status(400).json({ message: 'No fields should be empty' });
-
       const { vendorid, businessname } = req.vendor;
       const displayimg = req.file.url;
       const date_created = moment().format();
@@ -37,6 +36,7 @@ class ProductController {
           date_created,
         ]
       );
+
       return res.status(201).json({
         message: 'Product successfully added',
         product: product.rows[0],
