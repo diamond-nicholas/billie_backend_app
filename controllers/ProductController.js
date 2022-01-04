@@ -64,12 +64,19 @@ class ProductController {
   static async GetAll(req, res) {
     try {
       const { status } = req.query;
+      const queryObject = {};
+      if (status) {
+        queryObject.status =
+          status === 'available' ? 'available' : 'unavailable';
+      }
+      console.log(queryObject);
+
       const product = await pool.query(
         'SELECT * FROM products WHERE status=$1',
-        [status]
+        [queryObject.status]
       );
-      const nbHits = product.rows.length;
 
+      const nbHits = product.rows.length;
       return res.status(200).json({ nbHits, product: product.rows });
     } catch (err) {
       return res.status(403).json(err.message);
