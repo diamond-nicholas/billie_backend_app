@@ -64,7 +64,7 @@ class ProductController {
 
   static async GetAll(req, res) {
     try {
-      const { status, product_title } = req.query;
+      const { status, product_title, businessname } = req.query;
       const queryObject = {};
       if (status) {
         queryObject.status =
@@ -73,11 +73,18 @@ class ProductController {
       if (product_title) {
         queryObject.product_title = product_title;
       }
+      if (businessname) {
+        queryObject.businessname = businessname;
+      }
       console.log(queryObject);
 
       const product = await pool.query(
-        'SELECT * FROM products WHERE status=$1 or product_title=$2',
-        [queryObject.status, queryObject.product_title]
+        'SELECT * FROM products WHERE status=$1 or product_title=$2 or businessname=$3',
+        [
+          queryObject.status,
+          queryObject.product_title,
+          queryObject.businessname,
+        ]
       );
 
       const nbHits = product.rows.length;
