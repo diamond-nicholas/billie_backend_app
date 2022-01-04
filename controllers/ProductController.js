@@ -1,3 +1,4 @@
+const { query } = require('express');
 const moment = require('moment');
 const pool = require('../config/db');
 
@@ -63,17 +64,20 @@ class ProductController {
 
   static async GetAll(req, res) {
     try {
-      const { status } = req.query;
+      const { status, product_title } = req.query;
       const queryObject = {};
       if (status) {
         queryObject.status =
           status === 'available' ? 'available' : 'unavailable';
       }
+      if (product_title) {
+        queryObject.product_title = product_title;
+      }
       console.log(queryObject);
 
       const product = await pool.query(
-        'SELECT * FROM products WHERE status=$1',
-        [queryObject.status]
+        'SELECT * FROM products WHERE status=$1 or product_title=$2',
+        [queryObject.status, queryObject.product_title]
       );
 
       const nbHits = product.rows.length;
