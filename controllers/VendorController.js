@@ -18,7 +18,7 @@ class VendorController {
       const hashedPassword = bcrypt.hashSync(password, 10);
       const date_created = moment().format();
       const token = jwt.sign({ email }, process.env.SECRET, {
-        expiresIn: '2d',
+        expiresIn: '14d',
       });
       const vendor = await VendorModel.CreateNewVendor({
         username: `vendor${nanoid(10)}`,
@@ -151,25 +151,22 @@ class VendorController {
         return res.status(401).json({ message: 'Invalid password' });
       }
       const token = jwt.sign({ email }, process.env.SECRET, {
-        expiresIn: '2d',
+        expiresIn: '14d',
       });
       const currentTime = moment().format();
       const loggedInTime = await pool.query(
         'UPDATE vendors SET last_loggedin = $1 WHERE email = $2 RETURNING last_loggedin ',
         [currentTime, email]
       );
-      const businessname = vendors.rows[0].businessname;
-      const vendoremail = vendors.rows[0].email;
+      const {rows:getVendor} = await pool.query('SELECT * FROM vendors WHERE email=$1', [email]);
+      
 
       // console.log(businessname);
       // console.log(vendors.rows[0].vendorid);
       return res.json({
         message: 'Vendor logged in successfully',
-        vendorid: vendors.rows[0].vendorid,
-        email: vendoremail,
-        businessname: businessname,
-        token,
-        lastLoggedIn: loggedInTime.rows[0],
+        getVendor,
+        token        
       });
     } catch (err) {
       return res.status(401).json(err.message);
@@ -209,7 +206,7 @@ class VendorController {
       const last_edited = moment().format();
       const profile_image = req.file.url;
       const { rows: profileImage } = await pool.query(
-        'UPDATE vendors SET profile_image=$1,last_edited=$2 WHERE vendorid=$3 RETURNING *',
+        'UPDATE vendors SET profileimg=$1,last_edited=$2 WHERE vendorid=$3 RETURNING *',
         [profile_image, last_edited, parseInt(req.params.id)]
       );
       return res.status(201).json({
