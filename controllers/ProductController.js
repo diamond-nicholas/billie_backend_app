@@ -64,6 +64,15 @@ class ProductController {
 
   static async GetAll(req, res) {
     try {
+      const product = await pool.query('SELECT * FROM products');
+      const nbHits = product.rows.length;
+      return res.status(200).json({ nbHits, product: product.rows });
+    } catch (err) {
+      return res.status(403).json(err.message);
+    }
+  }
+  static async GetPaginatedProducts(req, res) {
+    try {
       const { status, product_title, businessname } = req.query;
       const queryObject = {};
       if (status) {
@@ -79,18 +88,14 @@ class ProductController {
       console.log(queryObject);
 
       const product = await pool.query(
-        'SELECT * FROM products WHERE status=$1 or product_title=$2 or businessname=$3',
-        [
-          queryObject.status,
-          queryObject.product_title,
-          queryObject.businessname,
-        ]
+        `SELECT * FROM products WHERE status, product_title, businessname =$1`,
+        [queryObject]
       );
 
       const nbHits = product.rows.length;
       return res.status(200).json({ nbHits, product: product.rows });
-    } catch (err) {
-      return res.status(403).json(err.message);
+    } catch (error) {
+      return res.status(403).json(error.message);
     }
   }
 
