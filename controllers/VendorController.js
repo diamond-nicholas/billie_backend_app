@@ -147,8 +147,10 @@ class VendorController {
       const vendors = await pool.query('SELECT * FROM vendors');
       if (vendors.rows.length === 0)
         return res.status(200).json({ message: 'No such vendors exists' });
+      const nbHits = vendors.rows.length;
       return res.status(200).json({
         message: 'Vendors retrieved successfully',
+        nbHits,
         vendor: vendors.rows,
       });
     } catch (err) {
