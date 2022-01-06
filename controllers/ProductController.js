@@ -78,22 +78,40 @@ class ProductController {
       if (status) {
         queryObject.status =
           status === 'available' ? 'available' : 'unavailable';
+          const product = await pool.query(
+            'SELECT * FROM products WHERE status=$1',
+            [queryObject.status]
+          );
+          const nbHits = product.rows.length;
+          return res.status(200).json({ nbHits, product: product.rows });
       }
       if (product_title) {
         queryObject.product_title = product_title;
+        const product = await pool.query(
+          'SELECT * FROM products WHERE product_title=$1',
+          [queryObject.product_title]
+        );
+        const nbHits = product.rows.length;
+        return res.status(200).json({ nbHits, product: product.rows });
       }
       if (businessname) {
         queryObject.businessname = businessname;
+        const product = await pool.query(
+          'SELECT * FROM products WHERE businessname=$1',
+          [queryObject.businessname]
+        );
+        const nbHits = product.rows.length;
+        return res.status(200).json({ nbHits, product: product.rows });
       }
       console.log(queryObject);
 
-      const product = await pool.query(
-        `SELECT * FROM products WHERE status, product_title, businessname =$1`,
-        [queryObject]
-      );
+      // const product = await pool.query(
+      //   'SELECT * FROM products WHERE status=$1, product_title=$2',
+      //   [queryObject.status]
+      // );
 
-      const nbHits = product.rows.length;
-      return res.status(200).json({ nbHits, product: product.rows });
+      // const nbHits = product.rows.length;
+      // return res.status(200).json({ nbHits, product: product.rows });
     } catch (error) {
       return res.status(403).json(error.message);
     }
