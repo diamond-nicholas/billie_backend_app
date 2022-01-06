@@ -1,3 +1,4 @@
+const { query } = require('express');
 const moment = require('moment');
 const pool = require('../config/db');
 
@@ -63,8 +64,39 @@ class ProductController {
 
   static async GetAll(req, res) {
     try {
+      const { status, product_title, businessname } = req.query;
+      const queryObject = {};
+      if (status) {
+        queryObject.status =
+          status === 'available' ? 'available' : 'unavailable';
+        const product = await pool.query(
+          'SELECT * FROM products WHERE status=$1 LIMIT 20',
+          [queryObject.status]
+        );
+        const nbHits = product.rows.length;
+        return res.status(200).json({ nbHits, product: product.rows });
+      }
+      if (product_title) {
+        queryObject.product_title = product_title;
+        const product = await pool.query(
+          'SELECT * FROM products WHERE product_title=$1 LIMIT 20',
+          [queryObject.product_title]
+        );
+        const nbHits = product.rows.length;
+        return res.status(200).json({ nbHits, product: product.rows });
+      }
+      if (businessname) {
+        queryObject.businessname = businessname;
+        const product = await pool.query(
+          'SELECT * FROM products WHERE businessname=$1 LIMIT 20',
+          [queryObject.businessname]
+        );
+        const nbHits = product.rows.length;
+        return res.status(200).json({ nbHits, product: product.rows });
+      }
       const product = await pool.query('SELECT * FROM products');
-      return res.status(200).json({ product: product.rows });
+      const nbHits = product.rows.length;
+      return res.status(200).json({ nbHits, product: product.rows });
     } catch (err) {
       return res.status(403).json(err.message);
     }
