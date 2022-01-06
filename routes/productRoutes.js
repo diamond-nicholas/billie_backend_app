@@ -16,8 +16,6 @@ router.post(
 router.get('/get/:id', authenticateToken, ProductController.GetOne);
 router.get('/get/', ProductController.GetAll);
 
-router.route('/getfiltered').get(ProductController.GetPaginatedProducts);
-
 router.patch(
   '/edit/:id',
   authenticateToken,
