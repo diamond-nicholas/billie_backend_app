@@ -672,7 +672,7 @@
             "bearerAuth": []
           }
         ],
-        "summary": "Retrieve all products where status is available",
+        "summary": "Retrieve all products where product_title is query",
         "responses": {
           "200": {
             "description": "",
@@ -700,7 +700,7 @@
             "bearerAuth": []
           }
         ],
-        "summary": "Retrieve all products where status is available",
+        "summary": "Retrieve all products where businessname is query",
         "responses": {
           "200": {
             "description": "",
