@@ -331,7 +331,34 @@
         }
       }
     },
-
+    "/vendors/get/?businessname={value}": {
+      "parameters": [
+        {
+          "name": "value",
+          "in": "path",
+          "required": true,
+          "description": "Value of the businessname you want to retrieve",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Vendor CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all vendors where businessname is req.query",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/vendors"
+            }
+          }
+        }
+      }
+    },
     "/vendors/category/{vendorId}": {
       "parameters": [
         {
