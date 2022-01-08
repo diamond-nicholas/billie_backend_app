@@ -303,7 +303,62 @@
         }
       }
     },
-
+    "/vendors/get/?vendortype={value}": {
+      "parameters": [
+        {
+          "name": "value",
+          "in": "path",
+          "required": true,
+          "description": "Value of the vendortype you want to retrieve",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Vendor CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all vendors where vendortype is req.query",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/vendors"
+            }
+          }
+        }
+      }
+    },
+    "/vendors/get/?businessname={value}": {
+      "parameters": [
+        {
+          "name": "value",
+          "in": "path",
+          "required": true,
+          "description": "Value of the businessname you want to retrieve",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Vendor CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all vendors where businessname is req.query",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/vendors"
+            }
+          }
+        }
+      }
+    },
     "/vendors/category/{vendorId}": {
       "parameters": [
         {
@@ -562,6 +617,90 @@
           }
         ],
         "summary": "Retrieve all products",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/products/get/?status={value}": {
+      "parameters": [
+        {
+          "name": "value",
+          "in": "path",
+          "required": true,
+          "description": "Value of the status you want to retrieve",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Product CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all products where status is available",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/products/get/?product_title={value}": {
+      "parameters": [
+        {
+          "name": "value",
+          "in": "path",
+          "required": true,
+          "description": "Value of the product_title you want to retrieve",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Product CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all products where product_title is query",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/product"
+            }
+          }
+        }
+      }
+    },
+    "/products/get/?businessname={value}": {
+      "parameters": [
+        {
+          "name": "value",
+          "in": "path",
+          "required": true,
+          "description": "Value of the businessname you want to retrieve",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": ["Product CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all products where businessname is query",
         "responses": {
           "200": {
             "description": "",

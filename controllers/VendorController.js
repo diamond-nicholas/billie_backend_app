@@ -124,11 +124,33 @@ class VendorController {
 
   static async GetAllVendors(req, res) {
     try {
+      const { vendortype, businessname } = req.query;
+      const queryObject = {};
+      if (vendortype) {
+        queryObject.vendortype = vendortype;
+        const vendor = await pool.query(
+          'SELECT * FROM vendors WHERE vendortype=$1',
+          [queryObject.vendortype]
+        );
+        const nbHits = vendor.rows.length;
+        return res.status(200).json({ nbHits, vendor: vendor.rows });
+      }
+      if (businessname) {
+        queryObject.businessname = businessname;
+        const vendor = await pool.query(
+          'SELECT * FROM vendors WHERE businessname=$1',
+          [queryObject.businessname]
+        );
+        const nbHits = vendor.rows.length;
+        return res.status(200).json({ nbHits, vendor: vendor.rows });
+      }
       const vendors = await pool.query('SELECT * FROM vendors');
       if (vendors.rows.length === 0)
         return res.status(200).json({ message: 'No such vendors exists' });
+      const nbHits = vendors.rows.length;
       return res.status(200).json({
         message: 'Vendors retrieved successfully',
+        nbHits,
         vendor: vendors.rows,
       });
     } catch (err) {
