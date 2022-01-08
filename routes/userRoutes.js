@@ -20,7 +20,7 @@ router.patch(
 router.delete('/delete/:id', authenticateToken, UserController.DeleteUser);
 router.get('/get/:id', authenticateToken, UserController.GetUser);
 router.get('/get/', UserController.GetAllUsers);
-
 router.post('/googlelogin', UserController.GoogleLogin);
+router.get('/orders/:id', UserController.FetchOrders);
 
 module.exports = router;

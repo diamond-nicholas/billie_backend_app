@@ -214,6 +214,21 @@ class UserController {
       return res.status(400).json(err.message);
     }
   }
+
+  static async FetchOrders(req,res){
+    try{
+      const {id} = req.params;
+      const {rows:orders} = await pool.query('SELECT * FROM orders WHERE userid=$1',[parseInt(id)]);
+      // const orderid = orders.orderid;
+      // const {rows:orderItems} = await pool.query('SELECT orderitems.orderid, orderitems.productid, orderitems.vendorid, products.product_title, products.businessname, products.displayimg, orderitems.price, orderitems.quantity, orderitems.subtotal FROM orderitems AS orderitems LEFT JOIN products AS products ON orderitems.productid = products.productid WHERE orderitems.orderid = $1;'[parseInt(orderid)]);
+      // const orderItems = orders.forEach(orderid => {
+      //   return pool.query('SELECT orderitems.orderid, orderitems.productid, orderitems.vendorid, products.product_title, products.businessname, products.displayimg, orderitems.price, orderitems.quantity, orderitems.subtotal FROM orderitems AS orderitems LEFT JOIN products AS products ON orderitems.productid = products.productid WHERE orderitems.orderid = $1;'[parseInt(orderid)]);
+      // })
+      res.status(200).json({message:'Retrieved order successfully',orders});
+    }catch(err){
+      return res.status(400).json(err.message);
+    }
+  }
 }
 
 module.exports = UserController;

@@ -31,6 +31,6 @@ router.get(
   authenticateToken,
   ProductController.ProductsVendorId
 );
-// router.get('/vendor/:businessname', authenticateToken, ProductController.ProductsBusinessName);
+
 
 module.exports = router;

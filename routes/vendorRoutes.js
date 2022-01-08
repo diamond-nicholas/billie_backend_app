@@ -19,5 +19,6 @@ router.delete('/delete/:id', authenticateToken, VendorController.DeleteVendor);
 router.get('/get/:id', VendorController.GetVendor);
 router.get('/get/', VendorController.GetAllVendors);
 router.get('/category/:id', VendorController.GetCategories);
+router.get('/orders/:id', VendorController.FetchOrders);
 
 module.exports = router;
