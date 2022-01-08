@@ -210,6 +210,34 @@
         }
       }
     },
+    "/users/orders/{vendorId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to get",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": ["User Authentication"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all orders made by specific user",
+        "responses": {
+          "200": {
+            "description": "Retrieved order successfully",
+            "schema": {
+              "$ref": "#/definitions/orders"
+            }
+          }
+        }
+      }
+    },
     "/vendors/create-vendor/": {
       "post": {
         "tags": ["Vendor Authentication"],
@@ -303,6 +331,34 @@
         }
       }
     },
+    "/vendors/orders/{vendorId}": {
+      "parameters": [
+        {
+          "name": "vendorId",
+          "in": "path",
+          "required": true,
+          "description": "ID of vendor that we want to get",
+          "type": "integer"
+        }
+      ],
+      "get": {
+        "tags": ["Vendor Authentication"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Retrieve all orders made for a specific vendor",
+        "responses": {
+          "200": {
+            "description": "Retrieved order successfully",
+            "schema": {
+              "$ref": "#/definitions/orders"
+            }
+          }
+        }
+      }
+    },
     "/vendors/get/?vendortype={value}": {
       "parameters": [
         {
@@ -325,7 +381,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/vendors"
+              "$ref": "#/definitions/vendor"
             }
           }
         }
@@ -353,7 +409,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/vendors"
+              "$ref": "#/definitions/vendor"
             }
           }
         }
@@ -509,7 +565,7 @@
           "200": {
             "description": "Vendor updated successfully",
             "schema": {
-              "$ref": "#/definitions/vendor/"
+              "$ref": "#/definitions/vendor"
             }
           }
         }
