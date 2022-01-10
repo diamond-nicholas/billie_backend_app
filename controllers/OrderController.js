@@ -75,6 +75,28 @@ class OrderController {
     }
   }
 
+  static async ConfirmOrder(req,res){
+    try{
+    const {orderid} = req.body;
+    const {id} = req.params;
+    const {rows:getOrder} = await pool.query('SELECT order_status,payment_method FROM orders WHERE orderid=$1',[orderid]);
+    // if(getOrder.order_status === 'confirmed' || getOrder.order_status === 'delivered')return res.status(400).json({message:'You cannot alter this order'})
+    // else if (getOrder.order_status === 'cancelled') return res.status(400).json({message:'This order has already been cancelled'})
+    // const payment_method = 'on_delivery';
+    const payment_method = getOrder[0].payment_method;
+    const orderStatus = 'confirmed';
+    if(payment_method !== 'prepaid')return res.json({message:'Payment must first be paid to confirm order'})
+    const {rows:confirmOrder} = await pool.query('UPDATE orders SET order_status = $1 WHERE orderid=$2 RETURNING *;',
+    [orderStatus, orderid]);
+    const { rows: orderItems } = await pool.query(
+      'SELECT orderitems.orderid, orderitems.productid, orderitems.vendorid, products.product_title, products.businessname, products.displayimg, orderitems.price, orderitems.quantity, orderitems.subtotal FROM orderitems AS orderitems LEFT JOIN products AS products ON orderitems.productid = products.productid WHERE orderitems.orderid = $1;',
+      [orderid]);
+    res.status(201).json({message:'Order confirmed' ,confirmOrder, orderItems});
+    }catch(err){
+      res.status(400).json({err:err.message});
+    }
+  }
+
 }
 
 module.exports = OrderController;

@@ -1270,6 +1270,44 @@
           }
         }
       }
+    },
+    "/orders/confirm/{userid}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user to add to orders",
+          "type": "integer"
+        },
+        {
+          "in": "body",
+          "name": "orderid",
+          "description": "Orderid of order to confirm. Not for prepaid orders",
+          "schema": {
+            "$ref": "#/definitions/orders/properties/orderid"
+          }
+        }
+      ],
+      "patch": {
+        "tags": ["Orders CRUD"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "summary": "Confirm orders",
+        "responses": {
+          "201": {
+            "description": "Order confirmed",
+            "schema": {
+              "$ref": "#/definitions/orders"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {

@@ -284,6 +284,7 @@ class VendorController {
       const {rows:orderItems} = await pool.query('SELECT orderitems.orderid, orderitems.productid, orderitems.vendorid, products.product_title, products.businessname, products.displayimg, orderitems.price, orderitems.quantity, orderitems.subtotal FROM orderitems AS orderitems LEFT JOIN products AS products ON orderitems.productid = products.productid WHERE orderitems.vendorid = $1;',[parseInt(id)]);
       if(orderItems.length === 0)return res.status(200).json({message:'No orders have been made'});
       // const orders = await pool.query('SELECT * FROM orders WHERE orderid=$1',[parseInt(orderid)]);
+      
       res.status(200).json({message:'Retrieved order successfully',orderItems});
     }catch(err){
       return res.status(400).json(err.message);
