@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const swaggerUi = require('swagger-ui-express');
+const debug = require('debug')('express');
 
 const userRouter = require('./routes/userRoutes');
 const vendorRouter = require('./routes/vendorRoutes');
@@ -41,5 +42,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  debug(`Listening on port ${port}`);
 });

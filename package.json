@@ -4,8 +4,8 @@
   "description": "Backend for billie app",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "nodemon app.js",
+    "dev": "set DEBUG=* & nodemon app.js",
+    "start": "set DEBUG=* & nodemon app.js",
     "test": "mocha ./tests/*.spec.js"
   },
   "repository": {
@@ -16,7 +16,9 @@
     "Postgres",
     "Express",
     "Node.js",
-    "Backend"
+    "Backend",
+    "Ecommerce",
+    "API"
   ],
   "author": "David Ukelere",
   "license": "ISC",
@@ -30,6 +32,7 @@
     "cloudinary-multer": "^1.0.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "debug": "^4.3.3",
     "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
@@ -53,6 +56,6 @@
     "nodemon": "^2.0.13"
   },
   "engines": {
-    "node": "15.x"
+    "node": "16.x"
   }
 }

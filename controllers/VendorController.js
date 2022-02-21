@@ -11,6 +11,7 @@ class VendorController {
   static async CreateVendor(req, res) {
     try {
       const { businessname, vendortype, address, email, password } = req.body;
+      const profileimg = req.file.url;
       if (!req.body)
         return res.status(402).json({ message: 'No request body' });
       if (!businessname || !vendortype || !address || !email || !password)
@@ -25,6 +26,7 @@ class VendorController {
         businessname,
         vendortype,
         address,
+        profileimg,
         email,
         password: hashedPassword,
         date_created,

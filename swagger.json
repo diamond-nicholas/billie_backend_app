@@ -241,16 +241,60 @@
     "/vendors/create-vendor/": {
       "post": {
         "tags": ["Vendor Authentication"],
-        "consumes": ["application/json"],
+        "consumes": ["multipart/form-data"],
         "produces": ["application/json"],
         "summary": "Vendor sign up",
         "parameters": [
           {
             "in": "body",
-            "name": "signup",
-            "description": "Endpoint to create a new user",
+            "name": "businessname",
+            "description": "Vendor business name",
+            "required": true,
             "schema": {
-              "$ref": "#/definitions/vendor-signup"
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "vendortype",
+            "description": "Category of vendor",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["food", "drink", "beauty", "health"]
+            }
+          },
+          {
+            "in": "body",
+            "name": "address",
+            "description": "Location of the vendor",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "formData",
+            "name": "profileimg",
+            "type": "file",
+            "description": "Profile Image Payload"
+          },
+          {
+            "in": "body",
+            "name": "email",
+            "description": "Email of the vendor",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "password",
+            "description": "Password for the vendor",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
           }
         ],
